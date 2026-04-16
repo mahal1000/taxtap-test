@@ -1,0 +1,8 @@
+TaxTap v13 built-in welcome intro
+
+Added
+- Styled first-open welcome overlay inside the app
+- Clear tester explanation of what TaxTap does
+- Two actions: Start testing / See a quick example
+- Settings button to reopen the intro later
+- Reset brings the intro back again

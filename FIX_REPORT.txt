@@ -1,0 +1,1 @@
+Minimal-change rebuild from original full release. Kept original Add/Input/Play flow. Added safer state normalisation, guarded startup, and preloaded 12-month flower shop sole trader demo data for testing. No UI redesign intended.

@@ -1,0 +1,16 @@
+
+TaxTap check-all update
+
+Main corrections in this build
+- Storage key moved to v10 so older contaminated local app states do not auto-load into this repaired build.
+- Automatic migration from older local keys removed.
+- Home screen main figure corrected: it now shows what is left after tax and tracked business costs.
+- Duplicate Disposable card replaced with Profit before tax.
+- Reset still keeps emergency recovery backup and now also removes older app keys.
+
+Checks intended for this build
+- blank first load should start empty
+- old v8/v9 local data should not auto-load into v10
+- HMRC link still present
+- yearly sample case still calculates tax and quarter splits
+- main home card should show disposable, not gross-after-tax

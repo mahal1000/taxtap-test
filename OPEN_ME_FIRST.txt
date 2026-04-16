@@ -1,0 +1,18 @@
+TAXTAP FULL SYSTEM RELEASE
+
+This is the full current system bundle.
+
+Main file to open:
+- TaxTap.html
+
+Supporting files included:
+- app.js
+- app_bundle.js
+
+These supporting files are included so the package is complete and so a developer can inspect the current shipped assets.
+
+For normal use:
+- Keep all files together in the same folder.
+- Open TaxTap.html in Chrome or Edge.
+
+This package contains the current full build files only.

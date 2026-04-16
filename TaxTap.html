@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxTap</title>
+<style>
+:root{
+  --bg1:#eaf3ff; --bg2:#f4edff; --bg3:#edfdf6;
+  --ink:#22345a; --muted:#7180a3; --line:#dfe6fb;
+  --primary:#5d68ff; --teal:#35d0c7; --gold:#f4c24f; --green:#17a663; --navy:#14224d;
+  --red:#e06464; --shadow:0 18px 48px rgba(67,85,169,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2) 52%,var(--bg3))}
+body{padding:16px}
+.app{max-width:490px;margin:0 auto;min-height:calc(100vh - 32px);background:rgba(255,255,255,.78);
+  backdrop-filter:blur(12px);border-radius:34px;overflow:hidden;border:1px solid rgba(255,255,255,.65);box-shadow:var(--shadow)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 10px}
+.brand{display:flex;gap:14px;align-items:center}
+.logo{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--teal));color:#fff;font-size:1.5rem;font-weight:900}
+h1{margin:0;font-size:2rem}
+.sub{color:var(--muted);margin-top:4px}
+.topbtn{border:none;background:#fff;border-radius:999px;padding:14px 18px;font-weight:900;color:var(--primary);box-shadow:var(--shadow);cursor:pointer}
+.screen{padding:10px 16px 22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:16px;box-shadow:0 10px 24px rgba(84,96,170,.08);margin-bottom:12px}
+.hero{background:linear-gradient(135deg,#636bff,#36d0c7);color:#fff;border:none}
+.actionHero{background:linear-gradient(160deg,#14224d,#1e2f6e 58%,#3150b2);color:#fff;border:none}
+.playHero{background:linear-gradient(145deg,#5f6cff 0%,#4f8cf0 52%,#35d0c7 100%);color:#fff;border:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.between{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.pill{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.2);font-weight:900}
+.lightpill{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:#eef2ff;color:var(--primary);font-weight:900}
+.good{background:#e6f8ef;color:#138f4c}
+.warn{background:#fff6e0;color:#8b6200}
+.bad{background:#ffe8e8;color:#b23f3f}
+.kpi{font-size:1.7rem;font-weight:900}
+.moneyBig{font-size:2.7rem;font-weight:900;margin:6px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mini{background:#f7f9ff;border:1px solid var(--line);border-radius:20px;padding:14px}
+.bar{height:16px;border-radius:999px;background:rgba(255,255,255,.22);overflow:hidden}
+.bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--teal),#7ebcff,var(--gold))}
+.btn{border:none;border-radius:20px;padding:15px 16px;font-weight:900;font-size:1rem;cursor:pointer}
+.primary{background:var(--gold);color:#2d2500}
+.secondary{background:#eef2ff;color:var(--primary)}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.actionGrid{display:grid;gap:12px;margin-top:16px}
+.actionBtn{display:flex;justify-content:space-between;align-items:center;padding:20px 18px;border:none;border-radius:24px;font-size:1.06rem;font-weight:900;cursor:pointer}
+.income{background:#fff;color:#193d73}
+.expense{background:#fff4e6;color:#7a4a00}
+.travel{background:#e9fff7;color:#0d6d54}
+.staff{background:#f2efff;color:#4c2d9b}
+.play{background:#fff7d8;color:#6d5400}
+.sectionTitle{font-size:1.34rem;font-weight:900;margin:0 0 6px}
+.stack > * + *{margin-top:12px}
+.field label{display:block;font-weight:900;font-size:.95rem;margin-bottom:8px}
+.smartInput{display:flex;gap:10px;align-items:center}
+.displayBox{flex:1;min-height:58px;display:flex;align-items:center;padding:0 16px;border-radius:18px;border:1px solid var(--line);background:#fff;font-size:1.2rem;font-weight:900}
+.displayBox.empty{color:#98a3c0}
+.calcBtn{border:none;border-radius:18px;min-width:138px;padding:16px 18px;background:#eef2ff;color:var(--primary);font-size:1rem;font-weight:900;box-shadow:inset 0 0 0 1px #d7dffd;cursor:pointer}
+input,select,textarea{width:100%;padding:14px 15px;border-radius:16px;border:1px solid var(--line);font-size:1rem;background:#fff;color:var(--ink)}
+textarea{min-height:88px;resize:vertical}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:none;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer;background:#eef2ff;color:var(--primary)}
+.chip.alt{background:#eef2ff;color:var(--primary)}
+.chip.green{background:#e8f9ef;color:#138f4c}
+.entry{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.entry:last-child{border-bottom:none}
+.bottom{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:12px 12px calc(16px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(248,250,255,.96),rgba(242,246,255,.985));backdrop-filter:blur(16px);border-top:1px solid rgba(98,100,160,.14);box-shadow:0 -16px 34px rgba(67,85,169,.10)}
+.nav{border:none;background:#f6f8ff;color:#44506f;padding:10px 6px;border-radius:18px;font-weight:900;min-height:58px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;box-shadow:inset 0 0 0 1px rgba(208,217,248,.98)}
+.nav.active{background:linear-gradient(135deg,var(--primary),var(--teal));color:#fff;box-shadow:0 14px 28px rgba(67,85,169,.22)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#1c2b5f;color:#fff;padding:14px 18px;border-radius:999px;box-shadow:var(--shadow);z-index:99;max-width:88vw}
+.overlay{position:fixed;inset:0;background:rgba(16,24,52,.38);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:200}
+.overlay.show{display:flex}
+
+.welcomeGate{position:fixed;inset:0;background:rgba(12,22,52,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:350;backdrop-filter:blur(6px)}
+.welcomeGate.show{display:flex}
+.welcomeCard{width:100%;max-width:430px;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 28px 70px rgba(20,34,77,.28);border:1px solid rgba(223,230,251,.95)}
+.welcomeHero{padding:22px 22px 18px;background:linear-gradient(145deg,#5d68ff 0%,#35d0c7 100%);color:#fff}
+.welcomeHero h2{margin:10px 0 6px;font-size:1.9rem;line-height:1.05}
+.welcomeHero p{margin:0;opacity:.96;line-height:1.45}
+.welcomeBody{padding:20px 22px 22px}
+.welcomeList{display:grid;gap:10px;margin-top:14px}
+.welcomeItem{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#f4f7ff);border:1px solid #dbe5ff}
+.welcomeTick{width:28px;height:28px;border-radius:999px;display:grid;place-items:center;background:#e8f9ef;color:#148a49;font-weight:900;flex:0 0 auto}
+.welcomeSmall{font-size:.92rem;color:#5f6c87;line-height:1.5;margin-top:14px}
+.welcomeActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.welcomeActions .btn{flex:1}
+.testBadge{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}
+.sheet{width:100%;max-width:460px;background:#fff;border-radius:28px;padding:18px;box-shadow:var(--shadow)}
+.calcDisplay{min-height:74px;border-radius:20px;background:#f6f8ff;border:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end;padding:0 18px;font-size:2rem;font-weight:900;overflow:hidden}
+.keypad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.key{border:none;border-radius:18px;min-height:58px;background:#fff;border:1px solid var(--line);font-size:1.1rem;font-weight:900;cursor:pointer}
+.key.action{background:#eef2ff;color:var(--primary)}
+.key.ok{background:var(--gold);color:#2d2500}
+.muted{color:var(--muted)}
+.tiny{font-size:.88rem;color:var(--muted)}
+.repeatRow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.repeatRow:last-child{border-bottom:none}
+.switch{display:inline-flex;align-items:center;gap:8px;font-weight:900;color:var(--muted)}
+.successRing{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;background:#e8f9ef;color:#148a49;font-weight:900}
+.rewardCard{background:linear-gradient(135deg,#eef4ff,#eaf9ff);border:1px solid #d9e4ff}
+.rewardBig{font-size:2rem;font-weight:900}
+.deltaUp{color:#148a49;font-weight:900}
+.deltaDown{color:#c14949;font-weight:900}
+.callout{border-radius:22px;padding:14px 16px;border:1px solid var(--line);background:#f8faff}
+.playStat{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px}
+.softList{display:grid;gap:10px}
+.tag{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:.8rem;font-weight:900;background:#eef2ff;color:var(--primary)}
+.tag.auto{background:#fff6de;color:#8b6200}
+.linkBtn{border:none;background:transparent;color:var(--primary);font-weight:900;cursor:pointer;padding:0}
+.inlineActions{display:flex;gap:10px;align-items:center}
+.btn,.chip,.actionBtn,.calcBtn,.nav,.topbtn,.key,.linkBtn,input,select,textarea{transition:transform .16s ease,box-shadow .2s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease}
+.btn:hover,.chip:hover,.actionBtn:hover,.calcBtn:hover,.nav:hover,.topbtn:hover,.key:hover{transform:translateY(-1px)}
+.btn:active,.chip:active,.actionBtn:active,.calcBtn:active,.nav:active,.topbtn:active,.key:active{transform:translateY(0) scale(.985)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#b8c6ff;box-shadow:0 0 0 4px rgba(93,104,255,.10)}
+.emptyState{display:grid;gap:12px;padding:18px;border-radius:24px;border:1px dashed #ccd8fb;background:linear-gradient(135deg,#f8fbff,#f7f3ff)}
+.emptyTitle{font-size:1.1rem;font-weight:900}
+.starterGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.starterBtn{border:none;border-radius:18px;padding:16px 14px;text-align:left;font-weight:900;cursor:pointer;background:#fff;box-shadow:0 10px 24px rgba(84,96,170,.08);border:1px solid var(--line);color:var(--ink)}
+.starterBtn small{display:block;color:var(--muted);font-weight:700;margin-top:4px}
+.helperRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.helperBadge{display:inline-flex;align-items:center;padding:8px 10px;border-radius:999px;background:#f3f6ff;color:#5061a8;font-weight:900;font-size:.82rem}
+.gentleNote{padding:12px 14px;border-radius:18px;background:#f7f9ff;border:1px solid var(--line);color:var(--muted)}
+.playHero .mini,.playHero .playStat,.playHero .callout{background:rgba(255,255,255,.96);color:var(--ink);border:1px solid rgba(219,229,255,.9)}
+.playHero .muted,.playHero .tiny,.playHero label{color:rgba(255,255,255,.92)}
+.playHero .playScore .muted,.playHero .playScore .tiny,.playHero .callout .tiny,.playHero .callout .muted{color:var(--muted)}
+.playHero .lightpill{background:rgba(255,255,255,.2);color:#fff}
+.playTile{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:12px;min-width:0}
+.playTile .displayBox{background:#fff;min-width:0}
+.playTile .calcBtn{background:#fff;color:var(--primary)}
+.playBoardGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.playBoardGrid .playTile{height:100%}
+.playScore{background:linear-gradient(135deg,#ffffff,#eef4ff);border:1px solid #dce6ff;border-radius:20px;padding:14px;min-height:0}
+.playInputStack{display:grid;gap:10px;margin-top:10px}
+.playValueBox{min-height:66px;display:flex;align-items:center;justify-content:flex-start;padding:0 16px;border-radius:18px;border:1px solid rgba(255,255,255,.26);background:#fff;color:var(--ink);font-size:1.35rem;font-weight:900;overflow:hidden}
+.playValueBox.empty{color:#94a0bf;font-size:1rem;font-weight:800}
+.playValueBox .muted{color:#94a0bf}
+.playNumberInput{width:100%;min-width:0;min-height:66px;border-radius:18px;border:1px solid rgba(255,255,255,.3);background:#fff;color:var(--ink);font-size:1.35rem;font-weight:900;padding:0 16px;outline:none}
+.playNumberInput::placeholder{color:#9aa7c7;font-size:1rem;font-weight:800}
+.playNumberInput.miles{font-size:1.2rem}
+.playHint{font-size:.86rem;color:rgba(255,255,255,.85);font-weight:800}
+.playEnterBtn{width:100%;min-width:0;background:#fff;color:var(--primary);justify-content:center}
+.footerHelper{margin-top:14px;background:linear-gradient(135deg,#f7f9ff,#eef8ff);border:1px solid #dbe5ff;border-radius:24px;padding:16px 16px 18px;box-shadow:0 10px 24px rgba(84,96,170,.06)}
+.footerHelperTitle{font-size:1.08rem;font-weight:900;margin:0 0 6px}
+.footerHelperActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.footerHelper .chip{background:#fff;border:1px solid #dbe5ff;color:var(--primary)}
+.bottomSpacerNote{margin-top:14px}
+
+.playActionRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.playActionRow .chip{padding:12px 16px}
+.calcHint{font-size:.88rem;color:rgba(255,255,255,.9);margin-top:8px}
+.playSummaryGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.playQuickGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.playQuickBtn{border:none;border-radius:20px;padding:14px 14px;background:rgba(255,255,255,.16);color:#fff;text-align:left;font-weight:900;cursor:pointer;border:1px solid rgba(255,255,255,.18)}
+.playQuickBtn strong{display:block;font-size:1.02rem}
+.playQuickBtn span{display:block;font-size:.88rem;color:rgba(255,255,255,.86);font-weight:700;margin-top:6px}
+.playQuickBtn .miniValue{display:block;margin-top:10px;padding:10px 12px;border-radius:16px;background:#fff;color:var(--ink);font-size:1.05rem;font-weight:900}
+.playPageHero{padding:14px}
+.playPageHero .sectionTitle{margin-bottom:4px}
+.playTopNote{max-width:250px;line-height:1.35}
+.playDeltaPill{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900;margin-top:10px}
+.playDeltaPill.up{color:#ecfff3;background:rgba(20,138,73,.16);border:1px solid rgba(255,255,255,.16)}
+.playDeltaPill.down{color:#fff0f0;background:rgba(193,73,73,.18);border:1px solid rgba(255,255,255,.16)}
+.playSummaryGrid.tight{margin-top:10px}
+.playScore.compact{padding:12px 14px;background:#f8fbff;border:1px solid #d8e5ff}
+.playScore.compact .moneyBig{font-size:2.05rem;line-height:1.05;color:#1f3566}
+.playScore.compact .muted,.playScore.compact .tiny{color:#4b628f;font-weight:600}
+.playScore.compact.nowCard .moneyBig{color:#22345f}
+.playScore.compact.whatIfCard{background:linear-gradient(180deg,#f7fffb 0%,#eefcf7 100%);border-color:#cdeee1}
+.playScore.compact.whatIfCard .moneyBig{color:#0f8f66}
+.playScore.compact.whatIfCard .tag{background:#e7faf1;color:#0f8f66}
+.playCalloutCompact{margin-top:10px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.94);border:1px solid rgba(219,229,255,.9);color:var(--ink)}
+.playCalloutCompact strong{display:block}
+.playQuickGrid.compact{margin-top:10px;gap:10px}
+.playQuickBtn.compact{padding:12px;border-radius:18px}
+.playQuickBtn.compact span{margin-top:4px;line-height:1.2}
+.playQuickBtn.compact .miniValue{margin-top:8px;padding:9px 12px}
+.playPageHero .playActionRow{margin-top:10px;justify-content:flex-end}
+.playChangesGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.playRealRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.playRealRow .chip{padding:10px 12px}
+.playImpactCard{display:flex;flex-direction:column;justify-content:center;gap:10px}
+.playImpactTop{display:grid;gap:6px}
+.playDeltaExplain{font-size:14px;font-weight:600;color:#374151}
+.playDeltaSub{font-size:12px;color:#6b7280}
+.playImpactCompare{margin-top:8px;font-size:12px;color:#6b7280;display:flex;justify-content:space-between;gap:12px}
+.playImpactMini{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0;border:none;background:transparent;font-size:12px;color:#6b7280}
+.playImpactMini .label{color:#6b7280;font-weight:600}
+.playImpactMini .value{font-weight:700;color:#6b7280}
+.disposable-change{display:flex;flex-direction:column;justify-content:center;gap:10px}
+.disposable-change .value{font-size:30px;font-weight:700}
+.disposable-change .value.negative{color:#dc2626}
+.impact-line{font-size:14px;font-weight:600;color:#374151}
+.impact-sub{font-size:12px;color:#6b7280}
+.impact-compare{margin-top:8px;font-size:12px;color:#6b7280;display:flex;justify-content:space-between;gap:12px}
+.impact-compare span{display:block}
+.make-real-card{display:flex;flex-direction:column;justify-content:center;gap:10px}
+.make-real-title{font-size:18px;font-weight:700;color:#1f3566}
+.make-real-line{font-size:14px;font-weight:600;color:#374151}
+.make-real-sub{font-size:12px;color:#6b7280;line-height:1.45}
+.make-real-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
+.make-real-grid .chip{width:100%;justify-content:center;text-align:center}
+.make-real-tip{margin-top:4px;font-size:12px;color:#6b7280}
+@media (max-width:430px){.playChangesGrid{grid-template-columns:1fr}.make-real-grid{grid-template-columns:1fr}}
+.settingsGridCompact{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sectionIntro{margin-top:6px;font-size:13px;color:#5b6782;line-height:1.5}
+.trustPanel{margin-top:12px;padding:14px;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#f4f7ff);border:1px solid #d8e5ff}
+.trustGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.trustItem{padding:10px 12px;border-radius:16px;background:#fff;border:1px solid #dde6fb}
+.trustItem strong{display:block;font-size:13px;color:#1f3566;margin-bottom:4px}
+.trustItem span{font-size:12px;color:#5f6c87;line-height:1.4}
+.infoStrip{margin-top:12px;padding:12px 14px;border-radius:16px;background:#f9fbff;border:1px solid #dbe7ff;font-size:13px;color:#44516a;line-height:1.5}
+.noteGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.noteCard{padding:12px 14px;border-radius:16px;background:#fff;border:1px solid #dde6fb}
+.noteCard strong{display:block;font-size:13px;color:#1f3566;margin-bottom:4px}
+.noteCard span{font-size:12px;color:#5f6c87;line-height:1.45}
+.timelineEmptyPlus{margin-top:14px;padding:14px;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#f7f3ff);border:1px dashed #cfdafb}
+.timelineEmptyPlus .emptyActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.timelineMetaGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.kpiHint{margin-top:6px;font-size:12px;color:#60708d;line-height:1.45}
+.homeExplain{margin-top:12px;padding:12px 14px;border-radius:16px;background:#f9fbff;border:1px solid #dbe7ff}
+.homeExplain strong{display:block;font-size:13px;color:#1f3566;margin-bottom:4px}
+.homeExplain span{font-size:12px;color:#5f6c87;line-height:1.45}
+
+.playGuide{margin-top:12px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff}
+.playGuide strong{display:block;margin-bottom:4px}
+.playGuide .tiny{color:rgba(255,255,255,.86)}
+.timelineHint{margin-top:8px;font-size:.85rem;color:var(--muted);font-weight:700}
+@media (max-width:430px){.trustGrid,.noteGrid,.timelineMetaGrid{grid-template-columns:1fr}}
+.settingsGridCompact .field{margin:0}
+@media (max-width:430px){.playSummaryGrid,.playQuickGrid,.settingsGridCompact{grid-template-columns:1fr}}
+@media (max-width:520px){.smartInput{flex-direction:column;align-items:stretch}.calcBtn{width:100%;min-width:0}.displayBox{width:100%}.playBoardGrid{grid-template-columns:1fr}}
+@media (max-width:430px){body{padding:8px}.app{min-height:calc(100vh - 16px);border-radius:26px}.grid2,.starterGrid,.playBoardGrid{grid-template-columns:1fr}.calcBtn{min-width:0}.bottom{gap:8px;padding:12px 10px calc(14px + env(safe-area-inset-bottom,0px))}.nav{font-size:.94rem;min-height:56px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <div class="logo">£</div>
+      <div>
+        <h1>TaxTap</h1>
+        <div class="sub">Simple tax control for real life</div>
+      </div>
+    </div>
+    <button class="topbtn" id="installBtn">Install</button>
+  </div>
+  <div class="screen" id="screen"></div>
+  <div class="bottom">
+    <button class="nav active" data-tab="home">Home</button>
+    <button class="nav" data-tab="add">Add</button>
+    <button class="nav" data-tab="play">Play</button>
+    <button class="nav" data-tab="timeline">Timeline</button>
+    <button class="nav" data-tab="settings">Settings</button>
+  </div>
+</div>
+
+<div class="overlay" id="calcOverlay">
+  <div class="sheet">
+    <div class="between">
+      <div>
+        <div class="sectionTitle" style="margin:0">Calculator</div>
+        <div class="tiny">Tap numbers, then press Use</div>
+      </div>
+      <button class="btn secondary" id="closeCalc">Close</button>
+    </div>
+    <div class="calcDisplay" id="calcDisplay">0</div>
+    <div class="keypad">
+      <button class="key" data-key="7">7</button>
+      <button class="key" data-key="8">8</button>
+      <button class="key" data-key="9">9</button>
+      <button class="key action" data-key="back">⌫</button>
+      <button class="key" data-key="4">4</button>
+      <button class="key" data-key="5">5</button>
+      <button class="key" data-key="6">6</button>
+      <button class="key action" data-key="clear">C</button>
+      <button class="key" data-key="1">1</button>
+      <button class="key" data-key="2">2</button>
+      <button class="key" data-key="3">3</button>
+      <button class="key action" data-key=".">.</button>
+      <button class="key action" data-key="00">00</button>
+      <button class="key" data-key="0">0</button>
+      <button class="key action" data-key="plusminus">±</button>
+      <button class="key ok" id="saveCalc">Done</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="welcomeGate" id="welcomeGate">
+  <div class="welcomeCard">
+    <div class="welcomeHero">
+      <span class="testBadge">TaxTap Test</span>
+      <h2>Welcome to TaxTap</h2>
+      <p>This is a test version built to make tax feel simple and clear.</p>
+    </div>
+    <div class="welcomeBody">
+      <div class="sectionTitle" style="margin:0">What it helps you see</div>
+      <div class="welcomeList">
+        <div class="welcomeItem"><span class="welcomeTick">✓</span><div><strong>What you made</strong><div class="tiny">Your income in one place.</div></div></div>
+        <div class="welcomeItem"><span class="welcomeTick">✓</span><div><strong>Your costs</strong><div class="tiny">Business spending and mileage.</div></div></div>
+        <div class="welcomeItem"><span class="welcomeTick">✓</span><div><strong>Estimated tax</strong><div class="tiny">A simple running picture of what may be due.</div></div></div>
+        <div class="welcomeItem"><span class="welcomeTick">✓</span><div><strong>What you keep</strong><div class="tiny">The number most people actually care about.</div></div></div>
+      </div>
+      <div class="welcomeSmall">
+        Please test it like a normal person. If anything feels confusing, wrong, awkward, or too hard, that is the feedback I want.
+      </div>
+      <div class="welcomeActions">
+        <button class="btn primary" id="welcomeStartBtn">Start testing</button>
+        <button class="btn secondary" id="welcomeGoPlayBtn">See a quick example</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+const KEY='taxtap_clean_v12';
+const OLD_KEYS=['taxtap_worldclass_v8','taxtap_worldclass_v9','taxtap_worldclass_v10','taxtap_worldclass_v11'];
+const RESET_BACKUP_KEY='taxtap_worldclass_reset_backup_v1';
+const HMRC_URL='https://www.gov.uk/log-in-file-self-assessment-tax-return';
+
+const defaultTaxProfiles=()=>({
+  '2025/26': makeDefaultProfile(2025),
+  '2026/27': makeDefaultProfile(2026),
+  '2027/28': makeDefaultProfile(2027)
+});
+
+const defaultState={
+  currentTab:'home',
+  taxProfileName:`UK Standard ${currentTaxYearLabel()}`,
+  selectedTaxYear:currentTaxYearLabel(),
+  selectedQuarter:'all',
+  activeSettingsYear:currentTaxYearLabel(),
+  mileage:{primary:0.45,secondary:0.25,limit:10000},
+  taxProfiles:defaultTaxProfiles(),
+  auditLog:[],
+  profile:{
+    fullName:'',
+    address1:'',
+    address2:'',
+    postcode:'',
+    email:'',
+    phone:'',
+    businessName:'',
+    utr:'',
+    taxCode:'1257L',
+    niNumber:'',
+    hmrcReady:false
+  },
+  userName:'You',
+  firstSeenAt:new Date().toISOString(),
+  lastSeenAt:new Date().toISOString(),
+  entries:[],
+  documents:[],
+  recurring:[],
+  onboarding:{welcomeSeen:false},
+  ui:{
+    addType:'income',
+    amount:'',
+    category:'',
+    note:'',
+    miles:'',
+    date:today(),
+    playIncome:'500',
+    playExpense:'200',
+    playMiles:'40',
+    playStaff:'120',
+    repeatEnabled:false,
+    repeatFrequency:'monthly',
+    repeatDay:'1',
+    repeatLabel:'',
+    staffName:'',
+    staffGross:'',
+    staffNI:'',
+    staffPension:'',
+    playScenarioLabel:'',
+    reportView:'quarter',
+    editingEntryId:null
+  }
+};
+
+let state=normalizeState(load());
+if(!localStorage.getItem(KEY)) state=normalizeState(clone(defaultState));
+state.lastSeenAt = new Date().toISOString();
+save();
+let calcTarget=null;
+let calcValue='0';
+const screen=document.getElementById('screen');
+const overlay=document.getElementById('calcOverlay');
+const calcDisplay=document.getElementById('calcDisplay');
+
+function clone(v){return JSON.parse(JSON.stringify(v));}
+function isLikelyTestEntry(entry){
+  const text=`${entry?.note||''} ${entry?.category||''}`.toLowerCase();
+  return ['flower shop sales','flowers and stock','supplier run','packaging and sundries','sample','demo','test'].some(flag=>text.includes(flag));
+}
+function hasLikelyTestData(data){
+  const entries=Array.isArray(data?.entries)?data.entries:[];
+  if(!entries.length) return false;
+  return entries.some(isLikelyTestEntry);
+}
+function stashEmergencyBackup(payload, reason='Emergency backup'){
+  try{
+    const backup={app:'TaxTap',reason,storedAt:new Date().toISOString(),state:payload};
+    localStorage.setItem(RESET_BACKUP_KEY, JSON.stringify(backup));
+    return true;
+  }catch(err){
+    console.warn('Could not store emergency backup', err);
+    return false;
+  }
+}
+
+function load(){
+  try{
+    const currentRaw=localStorage.getItem(KEY);
+    if(!currentRaw) return clone(defaultState);
+    const parsed=JSON.parse(currentRaw);
+    if(!parsed || typeof parsed!=='object') return clone(defaultState);
+    return parsed;
+  }catch{
+    return clone(defaultState);
+  }
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+
+function downloadTextFile(filename, content, mimeType='application/json'){
+  const blob=new Blob([content],{type:mimeType});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 0);
+}
+function exportAppData(){
+  const payload={
+    app:'TaxTap',
+    version:'finished-build',
+    exportedAt:new Date().toISOString(),
+    key:KEY,
+    state
+  };
+  downloadTextFile(`taxtap_backup_${today()}.json`, JSON.stringify(payload,null,2));
+  logAction('Data exported', 'Local backup file downloaded');
+  save();
+  toast('Data saved. Keep that backup somewhere safe.');
+}
+function importAppData(file){
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=(event)=>{
+    try{
+      const parsed=JSON.parse(String(event.target?.result||'{}'));
+      const incoming=parsed && typeof parsed==='object' ? (parsed.state || parsed.data || parsed) : null;
+      if(!incoming || typeof incoming!=='object') throw new Error('Invalid backup');
+      state=normalizeState(incoming);
+      logAction('Data imported', 'Backup loaded into this device');
+      save();
+      render();
+      toast('Data loaded back into TaxTap.');
+    }catch(err){
+      console.error(err);
+      toast('That backup file could not be loaded');
+    }
+  };
+  reader.readAsText(file);
+}
+function uid(){return Date.now()+Math.floor(Math.random()*1000);}
+function today(){return new Date().toISOString().slice(0,10);}
+function currentMonth(){return today().slice(0,7);}
+function makeSampleFlowerShopEntries(){
+  const monthly=[
+    ['2025-04-15',2600],['2025-05-15',2800],['2025-06-15',3000],['2025-07-15',2900],
+    ['2025-08-15',2950],['2025-09-15',3100],['2025-10-15',3350],['2025-11-15',3450],
+    ['2025-12-15',5200],['2026-01-15',2300],['2026-02-15',3800],['2026-03-15',4550]
+  ];
+  const entries=[];
+  monthly.forEach(([date,income],i)=>{
+    entries.push({id:uid(),type:'income',amount:income,category:'Sales',note:'Flower shop sales',date});
+    entries.push({id:uid(),type:'expense',amount:Math.round(income*0.32),category:'Supplies',note:'Flowers and stock',date});
+    entries.push({id:uid(),type:'expense',amount:850,category:'Rent',note:'Shop rent',date});
+    entries.push({id:uid(),type:'expense',amount:165,category:'Phone',note:'Utilities and phone',date});
+    entries.push({id:uid(),type:'expense',amount:95,category:'Other expense',note:'Packaging and sundries',date});
+    const miles=[24,18,22,20,16,21,19,20,28,15,23,26][i];
+    entries.push({id:uid(),type:'mileage',amount:mileageAllowance(miles),miles,category:'Travel',note:'Supplier run',date});
+  });
+  return entries;
+}
+function seedDemoDataIfEmpty(){ return; }
+
+
+function currentTaxYearLabel(dateStr=today()){
+  const d=new Date(dateStr+'T12:00:00');
+  const y=d.getFullYear();
+  const start = d >= new Date(`${y}-04-06T00:00:00`) ? y : y-1;
+  return `${start}/${String((start+1)%100).padStart(2,'0')}`;
+}
+function makeDefaultProfile(startYear){
+  return {
+    name:`UK Standard ${startYear}/${String((startYear+1)%100).padStart(2,'0')}`,
+    personalAllowance:12570,
+    basicRate:0.20,
+    higherRate:0.40,
+    additionalRate:0.45,
+    basicBand:37700,
+    higherThreshold:50270,
+    additionalThreshold:125140,
+    class4MainRate:0.06,
+    class4UpperRate:0.02,
+    class4LowerProfitsLimit:12570,
+    class4UpperProfitsLimit:50270,
+    mileage:{primary:0.45,secondary:0.25,limit:10000},
+    deadlines:{
+      Q1:`${startYear}-08-07`,
+      Q2:`${startYear}-11-07`,
+      Q3:`${startYear+1}-02-07`,
+      Q4:`${startYear+1}-05-07`,
+      YEAR_END:`${startYear+2}-01-31`
+    }
+  };
+}
+
+function sanitizeTaxProfile(profile, fallback){
+  const p={...(profile||{})};
+  if(p.basicRate===0.26) p.basicRate=fallback.basicRate;
+  if(p.higherRate===0.42) p.higherRate=fallback.higherRate;
+  if(p.additionalRate===undefined || p.additionalRate===null || Number.isNaN(Number(p.additionalRate))) p.additionalRate=fallback.additionalRate;
+  if(p.personalAllowance===undefined || p.personalAllowance===null || Number.isNaN(Number(p.personalAllowance))) p.personalAllowance=fallback.personalAllowance;
+  if(p.basicBand===undefined || p.basicBand===null || Number.isNaN(Number(p.basicBand))) p.basicBand=fallback.basicBand;
+  if(p.higherThreshold===undefined || p.higherThreshold===null || Number.isNaN(Number(p.higherThreshold))) p.higherThreshold=fallback.higherThreshold;
+  if(p.additionalThreshold===undefined || p.additionalThreshold===null || Number.isNaN(Number(p.additionalThreshold))) p.additionalThreshold=fallback.additionalThreshold;
+  if(p.class4MainRate===undefined || p.class4MainRate===null || Number.isNaN(Number(p.class4MainRate))) p.class4MainRate=fallback.class4MainRate;
+  if(p.class4UpperRate===undefined || p.class4UpperRate===null || Number.isNaN(Number(p.class4UpperRate))) p.class4UpperRate=fallback.class4UpperRate;
+  if(p.class4LowerProfitsLimit===undefined || p.class4LowerProfitsLimit===null || Number.isNaN(Number(p.class4LowerProfitsLimit))) p.class4LowerProfitsLimit=fallback.class4LowerProfitsLimit;
+  if(p.class4UpperProfitsLimit===undefined || p.class4UpperProfitsLimit===null || Number.isNaN(Number(p.class4UpperProfitsLimit))) p.class4UpperProfitsLimit=fallback.class4UpperProfitsLimit;
+  p.mileage = p.mileage || {...fallback.mileage};
+  p.deadlines = p.deadlines || {...fallback.deadlines};
+  return p;
+}
+function roundMoneyValue(n){
+  return Math.round((Number(n||0) + Number.EPSILON) * 100) / 100;
+}
+function adjustedPersonalAllowanceForIncome(profit, profile=selectedProfile()){
+  const rawAllowance=Number(profile.personalAllowance ?? 12570);
+  const taperStart=100000;
+  const taperReduction=Math.max(0, (Math.max(0, Number(profit||0) - taperStart)) / 2);
+  return Math.max(0, rawAllowance - taperReduction);
+}
+function ensureFutureProfiles(profiles){
+  const out={...(profiles||{})};
+  const current=parseInt(currentTaxYearLabel().split('/')[0],10);
+  for(let y=current-1;y<=current+3;y+=1){
+    const label=`${y}/${String((y+1)%100).padStart(2,'0')}`;
+    const fallback=makeDefaultProfile(y);
+    if(!out[label]) out[label]=fallback;
+    out[label]=sanitizeTaxProfile(out[label], fallback);
+    out[label].personalAllowance = Number(out[label].personalAllowance ?? fallback.personalAllowance);
+    out[label].basicRate = Number(out[label].basicRate ?? fallback.basicRate);
+    out[label].higherRate = Number(out[label].higherRate ?? fallback.higherRate);
+    out[label].additionalRate = Number(out[label].additionalRate ?? fallback.additionalRate);
+    out[label].basicBand = Number(out[label].basicBand ?? fallback.basicBand);
+    out[label].higherThreshold = Number(out[label].higherThreshold ?? fallback.higherThreshold);
+    out[label].additionalThreshold = Number(out[label].additionalThreshold ?? fallback.additionalThreshold);
+    out[label].class4MainRate = Number(out[label].class4MainRate ?? fallback.class4MainRate);
+    out[label].class4UpperRate = Number(out[label].class4UpperRate ?? fallback.class4UpperRate);
+    out[label].class4LowerProfitsLimit = Number(out[label].class4LowerProfitsLimit ?? fallback.class4LowerProfitsLimit);
+    out[label].class4UpperProfitsLimit = Number(out[label].class4UpperProfitsLimit ?? fallback.class4UpperProfitsLimit);
+    out[label].mileage = out[label].mileage || {primary:0.45,secondary:0.25,limit:10000};
+    out[label].deadlines = out[label].deadlines || fallback.deadlines;
+    if(out[label].deadlines.YEAR_END===undefined) out[label].deadlines.YEAR_END=`${y+2}-01-31`;
+  }
+  return out;
+}
+function normalizeState(raw){
+  const s = raw && typeof raw==='object' ? raw : clone(defaultState);
+  s.taxProfiles = ensureFutureProfiles(s.taxProfiles || defaultTaxProfiles());
+  s.selectedTaxYear = s.selectedTaxYear || currentTaxYearLabel();
+  if(!s.taxProfiles[s.selectedTaxYear]) s.taxProfiles[s.selectedTaxYear]=makeDefaultProfile(parseInt(s.selectedTaxYear.split('/')[0],10));
+  s.activeSettingsYear = s.activeSettingsYear || s.selectedTaxYear;
+  s.selectedQuarter = s.selectedQuarter || 'all';
+  s.profile = {...clone(defaultState.profile), ...(s.profile||{})};
+  s.ui = {...clone(defaultState.ui), ...(s.ui||{})};
+  s.ui.reportView = s.ui.reportView || 'quarter';
+  if(s.ui.editingEntryId===undefined) s.ui.editingEntryId = null;
+  s.ui.date = s.ui.date || today();
+  s.auditLog = Array.isArray(s.auditLog) ? s.auditLog : [];
+  s.entries = Array.isArray(s.entries) ? s.entries : [];
+  s.documents = Array.isArray(s.documents) ? s.documents : [];
+  s.recurring = Array.isArray(s.recurring) ? s.recurring : [];
+  s.mileage = {...clone(defaultState.mileage), ...(s.mileage||{})};
+  const activeProfile=s.taxProfiles[s.selectedTaxYear] || makeDefaultProfile(parseInt(s.selectedTaxYear.split('/')[0],10));
+  s.taxProfileName = activeProfile.name;
+  if(!s.mileage.primary && s.mileage.primary!==0) s.mileage.primary = activeProfile.mileage.primary;
+  if(!s.mileage.secondary && s.mileage.secondary!==0) s.mileage.secondary = activeProfile.mileage.secondary;
+  if(!s.mileage.limit && s.mileage.limit!==0) s.mileage.limit = activeProfile.mileage.limit;
+  return s;
+}
+function profileForYear(yearLabel=state.selectedTaxYear){
+  state.taxProfiles = ensureFutureProfiles(state.taxProfiles);
+  if(!state.taxProfiles[yearLabel]) state.taxProfiles[yearLabel]=makeDefaultProfile(parseInt(yearLabel.split('/')[0],10));
+  return state.taxProfiles[yearLabel];
+}
+function selectedProfile(){ return profileForYear(state.selectedTaxYear); }
+function taxYearBounds(label=state.selectedTaxYear){
+  const startYear=parseInt(String(label).split('/')[0],10);
+  return {start:`${startYear}-04-06`, end:`${startYear+1}-04-05`};
+}
+function periodEntries(yearLabel=state.selectedTaxYear, quarter=state.selectedQuarter){
+  const bounds=taxYearBounds(yearLabel);
+  return (state.entries||[]).filter(e=>{
+    const date=e.date||'';
+    if(date < bounds.start || date > bounds.end) return false;
+    if(quarter==='all') return true;
+    const q=quarterForDate(date, yearLabel);
+    return q===quarter;
+  });
+}
+function taxYearOptions(){
+  return Object.keys(ensureFutureProfiles(state.taxProfiles)).sort((a,b)=>b.localeCompare(a));
+}
+function quarterForDate(dateStr, yearLabel=currentTaxYearLabel(dateStr)){
+  const startYear=parseInt(String(yearLabel).split('/')[0],10);
+  if(dateStr>=`${startYear}-04-06` && dateStr<=`${startYear}-07-05`) return 'Q1';
+  if(dateStr>=`${startYear}-07-06` && dateStr<=`${startYear}-10-05`) return 'Q2';
+  if(dateStr>=`${startYear}-10-06` && dateStr<=`${startYear+1}-01-05`) return 'Q3';
+  if(dateStr>=`${startYear+1}-01-06` && dateStr<=`${startYear+1}-04-05`) return 'Q4';
+  return 'Q?';
+}
+function quarterOptions(){ return ['all','Q1','Q2','Q3','Q4']; }
+function quarterLabel(q, yearLabel=state.selectedTaxYear){
+  if(q==='all') return 'Full year';
+  const startYear=parseInt(String(yearLabel).split('/')[0],10);
+  const ranges={
+    Q1:`Q1 (6 Apr – 5 Jul)`,
+    Q2:`Q2 (6 Jul – 5 Oct)`,
+    Q3:`Q3 (6 Oct – 5 Jan)`,
+    Q4:`Q4 (6 Jan – 5 Apr)`
+  };
+  return ranges[q] || q;
+}
+function selectedPeriodLabel(){ return state.selectedQuarter==='all' ? `${state.selectedTaxYear} full year` : `${state.selectedTaxYear} ${quarterLabel(state.selectedQuarter, state.selectedTaxYear)}`; }
+function formatDateNice(v){
+  if(!v) return 'Not set';
+  const d=new Date(v+'T12:00:00');
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+function deadlineForSelection(){
+  const p=selectedProfile();
+  const key=state.selectedQuarter==='all' ? (state.ui.reportView==='year' ? 'YEAR_END' : quarterForDate(today(), state.selectedTaxYear)) : state.selectedQuarter;
+  return p.deadlines[key] || p.deadlines.YEAR_END;
+}
+function daysLeft(){
+  const deadline=deadlineForSelection();
+  const diff=Math.ceil((new Date(deadline+'T23:59:59') - new Date(today()+'T00:00:00'))/86400000);
+  return Math.max(diff,0);
+}
+
+function emergencyBackupAvailable(){
+  try{return !!localStorage.getItem(RESET_BACKUP_KEY);}catch{return false;}
+}
+function restoreEmergencyBackup(){
+  try{
+    const raw=localStorage.getItem(RESET_BACKUP_KEY);
+    if(!raw) return false;
+    const parsed=JSON.parse(raw);
+    const incoming=parsed && typeof parsed==='object' ? (parsed.state || parsed.data || parsed) : null;
+    if(!incoming || typeof incoming!=='object') return false;
+    state=normalizeState(incoming);
+    logAction('Emergency backup restored', parsed.reason || 'Reset backup recovered');
+    save();
+    return true;
+  }catch(err){
+    console.error(err);
+    return false;
+  }
+}
+function removeLikelyTestData(){
+  const before=(state.entries||[]).length;
+  state.entries=(state.entries||[]).filter(e=>!isLikelyTestEntry(e));
+  const removed=before - state.entries.length;
+  if(removed>0){
+    logAction('Test/demo data removed', `${removed} entry${removed===1?'':'ies'} removed`);
+    save();
+  }
+  return removed;
+}
+function greetingParts(){
+  const now=new Date();
+  const hour=now.getHours();
+  let hello='Welcome back';
+  if(hour<12) hello='Good morning';
+  else if(hour<18) hello='Good afternoon';
+  else hello='Good evening';
+  const lastSeen=state.lastSeenAt ? new Date(state.lastSeenAt) : null;
+  let seenText='Nice to see you again.';
+  if(lastSeen && !Number.isNaN(lastSeen.getTime())){
+    const days=Math.floor((now - lastSeen)/86400000);
+    if(days <= 0) seenText='Nice to see you again today.';
+    else if(days === 1) seenText='I have not seen you in 1 day.';
+    else seenText=`I have not seen you in ${days} days.`;
+  }
+  return {hello, seenText};
+}
+
+
+function shouldShowWelcome(){
+  return !state?.onboarding?.welcomeSeen;
+}
+function openWelcome(){
+  const gate=document.getElementById('welcomeGate');
+  if(gate) gate.classList.add('show');
+}
+function closeWelcome(markSeen=true){
+  const gate=document.getElementById('welcomeGate');
+  if(gate) gate.classList.remove('show');
+  if(markSeen){
+    state.onboarding = state.onboarding || {};
+    state.onboarding.welcomeSeen = true;
+    logAction('Welcome seen', 'Tester intro opened');
+    save();
+  }
+}
+function bindWelcome(){
+  const startBtn=document.getElementById('welcomeStartBtn');
+  if(startBtn) startBtn.onclick=()=>{ closeWelcome(true); setTab('home'); };
+  const playBtn=document.getElementById('welcomeGoPlayBtn');
+  if(playBtn) playBtn.onclick=()=>{ closeWelcome(true); setTab('play'); };
+}
+
+function logAction(action, detail){
+  state.auditLog = state.auditLog || [];
+  state.auditLog.unshift({id:uid(),at:new Date().toISOString(),action,detail});
+  state.auditLog = state.auditLog.slice(0,120);
+}
+function staffSummary(entries){
+  const map={};
+  (entries||[]).filter(e=>e.type==='staff').forEach(e=>{
+    const name=((e.note||'Staff').split(' · ')[0] || 'Staff').trim();
+    if(!map[name]) map[name]={name,total:0,count:0};
+    map[name].total += Number(e.amount||0);
+    map[name].count += 1;
+  });
+  return Object.values(map).sort((a,b)=>b.total-a.total);
+}
+function money(n){return '£'+Number(n||0).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function moneyShort(n){return '£'+Number(n||0).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:2});}
+function entryValueForTax(e){
+  if(e.type==='mileage') return 0;
+  return Number(e.amount||0);
+}
+function deductibleValue(e){
+  if(e.type==='mileage') return Number(e.amount||0);
+  if(e.type==='income') return 0;
+  return Number(e.amount||0);
+}
+function lastMileageEntry(){
+  return (state.entries||[]).find(e => e.type==='mileage') || null;
+}
+function mileageAllowance(m, profile=selectedProfile()){
+  const sourceMileage = profile?.mileage || state.mileage || {primary:0.45,secondary:0.25,limit:10000};
+  const miles=Number(m||0), limit=Number(sourceMileage.limit||10000), p=Number(sourceMileage.primary||0.45), s=Number(sourceMileage.secondary||0.25);
+  return Math.max(0, Math.min(miles,limit)*p + Math.max(0,miles-limit)*s);
+}
+function taxBreakdownForProfit(profit, profile=selectedProfile()){
+  const p=Math.max(0, Number(profit||0));
+  const personalAllowance=adjustedPersonalAllowanceForIncome(p, profile);
+  const basicBand=Number(profile.basicBand ?? 37700);
+  const higherThreshold=Number(profile.higherThreshold ?? 50270);
+  const additionalThreshold=Number(profile.additionalThreshold ?? 125140);
+  const basicRate=Number(profile.basicRate ?? 0.20);
+  const higherRate=Number(profile.higherRate ?? 0.40);
+  const additionalRate=Number(profile.additionalRate ?? 0.45);
+  const class4Lower=Number(profile.class4LowerProfitsLimit ?? 12570);
+  const class4Upper=Number(profile.class4UpperProfitsLimit ?? higherThreshold);
+  const class4MainRate=Number(profile.class4MainRate ?? 0.06);
+  const class4UpperRate=Number(profile.class4UpperRate ?? 0.02);
+  const taxable=Math.max(0, p - personalAllowance);
+  const basicSlice=Math.max(0, Math.min(taxable, basicBand));
+  const higherBandWidth=Math.max(0, (additionalThreshold - personalAllowance) - basicBand);
+  const higherSlice=Math.max(0, Math.min(Math.max(0, taxable - basicBand), higherBandWidth));
+  const additionalSlice=Math.max(0, taxable - basicBand - higherBandWidth);
+  const incomeTax=roundMoneyValue((basicSlice*basicRate) + (higherSlice*higherRate) + (additionalSlice*additionalRate));
+  let class4NI=0;
+  if(p > class4Lower){
+    const mainSlice=Math.max(0, Math.min(p, class4Upper) - class4Lower);
+    const upperSlice=Math.max(0, p - class4Upper);
+    class4NI=roundMoneyValue((mainSlice*class4MainRate) + (upperSlice*class4UpperRate));
+  }
+  const tax=roundMoneyValue(incomeTax + class4NI);
+  return {
+    profit:roundMoneyValue(p),
+    personalAllowance:roundMoneyValue(personalAllowance),
+    taxable:roundMoneyValue(taxable),
+    basicSlice:roundMoneyValue(basicSlice),
+    higherSlice:roundMoneyValue(higherSlice),
+    additionalSlice:roundMoneyValue(additionalSlice),
+    incomeTax,
+    class4NI,
+    tax
+  };
+}
+function totals(entries=periodEntries(), yearLabel=state.selectedTaxYear){
+  const profile=profileForYear(yearLabel);
+  const income=(entries||[]).filter(e=>e.type==='income').reduce((a,b)=>a+Number(b.amount||0),0);
+  const cashExpense=(entries||[]).filter(e=>e.type!=='income' && e.type!=='mileage').reduce((a,b)=>a+Number(b.amount||0),0);
+  const mileageDeduction=(entries||[]).filter(e=>e.type==='mileage').reduce((a,b)=>a+Number(b.amount||0),0);
+  const totalDeduction = cashExpense + mileageDeduction;
+  const profit=Math.max(0,income-totalDeduction);
+  const breakdown=taxBreakdownForProfit(profit, profile);
+  const tax=breakdown.tax;
+  const keep=roundMoneyValue(Math.max(0, profit - tax));
+  const disposable=keep;
+  const staffCost=(entries||[]).filter(e=>e.type==='staff').reduce((a,b)=>a+Number(b.amount||0),0);
+  const consistencyOk = Math.abs(keep - roundMoneyValue(Math.max(0, profit - tax))) < 0.005;
+  return {income,cashExpense,mileageDeduction,totalDeduction,profit,tax,keep,disposable,mileageSaved:mileageDeduction,staffCost,incomeTax:breakdown.incomeTax,class4NI:breakdown.class4NI,taxableProfit:breakdown.taxable,personalAllowance:breakdown.personalAllowance,consistencyOk};
+}
+function playResults(){
+  const t=totals();
+  const inc=Number(state.ui.playIncome||0);
+  const exp=Number(state.ui.playExpense||0);
+  const miles=Number(state.ui.playMiles||0);
+  const staff=Number(state.ui.playStaff||0);
+  const mileageValue = mileageAllowance(miles);
+  const incomeAfter = t.income + inc;
+  const cashExpenseAfter = t.cashExpense + exp + staff;
+  const deductionAfter = cashExpenseAfter + t.mileageDeduction + mileageValue;
+  const profitAfter = Math.max(0, incomeAfter - deductionAfter);
+  const breakdown=taxBreakdownForProfit(profitAfter, selectedProfile());
+  const taxAfter = breakdown.tax;
+  const keepAfter = roundMoneyValue(Math.max(0, profitAfter - taxAfter));
+  const disposableAfter = keepAfter;
+  return {inc,exp,miles,staff,expenseTaxImpact:0,mileageValue,mileageTaxImpact:0,incomeAfter,cashExpenseAfter,profitAfter,taxAfter,keepAfter,disposableAfter,incomeTaxAfter:breakdown.incomeTax,class4NIAfter:breakdown.class4NI,taxableProfitAfter:breakdown.taxable};
+}
+function toast(msg){
+  const old=document.querySelector('.toast'); if(old) old.remove();
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2400);
+}
+function setTab(tab){state.currentTab=tab; save(); render();}
+function entryTitle(e){
+  if(e.type==='income') return 'Income · '+(e.category||'Income');
+  if(e.type==='expense') return 'Expense · '+(e.category||'Expense');
+  if(e.type==='staff') return 'Staff · '+(e.note||'Staff cost');
+  return 'Mileage · '+Number(e.miles||0)+' miles';
+}
+function addEntry(e){state.entries.unshift({...e,id:uid()}); logAction('Entry added', `${e.type} · ${money(e.amount||0)} · ${e.date||today()}`); save();}
+function updateEntry(entryId, updates){
+  const idx=(state.entries||[]).findIndex(x=>String(x.id)===String(entryId));
+  if(idx===-1) return false;
+  const original=state.entries[idx]||{};
+  state.entries[idx]={...original,...updates,id:original.id};
+  logAction('Entry updated', `${state.entries[idx].type} · ${money(state.entries[idx].amount||0)} · ${state.entries[idx].date||today()}`);
+  save();
+  return true;
+}
+function quarterHeadline(){ return state.selectedQuarter==='all' ? `${state.selectedTaxYear} full year` : `${state.selectedTaxYear} ${quarterLabel(state.selectedQuarter, state.selectedTaxYear)}`; }
+function incomeToday(){return periodEntries().filter(e=>e.type==='income'&&e.date===today()).reduce((a,b)=>a+Number(b.amount||0),0);}
+function expenseToday(){return periodEntries().filter(e=>e.type!=='income'&&e.date===today()).reduce((a,b)=>a+Number(b.amount||0),0);}
+function milesToday(){return periodEntries().filter(e=>e.type==='mileage'&&e.date===today()).reduce((a,b)=>a+Number(b.miles||0),0);}
+function recurringDueText(){const active=(state.recurring||[]).filter(r=>r.active).length; return active? active+' repeat items watching this month':'No repeat items yet';}
+function usualItems(){
+  const map={};
+  (state.entries||[]).forEach(e=>{
+    if(e.type==='income') return;
+    const label=(e.category||e.note||'Item').trim();
+    const key=e.type+'|'+label+'|'+Number(e.amount||0).toFixed(2)+'|'+(e.miles?Number(e.miles).toFixed(2):'0');
+    if(!map[key]) map[key]={key,label,type:e.type,amount:Number(e.amount||0),miles:Number(e.miles||0),category:e.category||'',note:e.note||'',count:0,lastDate:e.date||'',grossPay:Number(e.grossPay||0),employerNI:Number(e.employerNI||0),pension:Number(e.pension||0)};
+    map[key].count+=1;
+    if((e.date||'') > map[key].lastDate) map[key].lastDate=e.date||'';
+  });
+  return Object.values(map).sort((a,b)=> b.count-a.count || b.lastDate.localeCompare(a.lastDate)).slice(0,5);
+}
+
+function maybeAutoAddRecurring(){
+  const todayDate = new Date();
+  const todayDay = todayDate.getDate();
+  const monthKey = currentMonth();
+  let added=0;
+  (state.recurring||[]).forEach(item=>{
+    if(!item.active || item.frequency!=='monthly') return;
+    if(Number(item.dayOfMonth||1)!==todayDay) return;
+    if(item.lastAutoAddedMonth===monthKey) return;
+    const already = state.entries.some(e =>
+      e.type===item.type &&
+      Number(e.amount||0)===Number(item.amount||0) &&
+      (e.category||'')===(item.category||'') &&
+      (e.note||'')===(item.note||'') &&
+      (e.date||'').slice(0,7)===monthKey
+    );
+    if(already){ item.lastAutoAddedMonth = monthKey; return; }
+    state.entries.unshift({id:uid(), type:item.type, amount:Number(item.amount||0), category:item.category||'', note:item.note||'', date:today(), autoAdded:true});
+    logAction('Repeat auto-add', `${item.label} · ${money(item.amount||0)} · ${today()}`);
+    item.lastAutoAddedMonth=monthKey;
+    added += 1;
+  });
+  if(added){ save(); }
+  return added;
+}
+
+function nudgeMessage(){
+  const t=totals();
+  const recent = state.entries.filter(e => (e.date||'') >= currentMonth()+'-01').length;
+  const fuelLogged = state.entries.some(e => (e.category||'')==='Fuel' && (e.date||'').slice(0,7)===currentMonth());
+  const travelLogged = state.entries.some(e => e.type==='mileage' && (e.date||'').slice(0,7)===currentMonth());
+  const staffLogged = state.entries.some(e => e.type==='staff' && (e.date||'').slice(0,7)===currentMonth());
+  const docs = (state.documents||[]).length;
+  const ready = hmrcReadiness();
+  if(recent >= 12 && ready.complete) return {kind:'good', text:'Excellent — you are updating well and your key filing details are already stored.'};
+  if(t.disposable < 0) return {kind:'bad', text:'You are overspending right now. Use Play to test what income, mileage, costs or staff changes would improve this.'};
+  if(t.tax > 1000 && !fuelLogged && !travelLogged) return {kind:'warn', text:'This looks like a high-tax month. Check fuel, travel, tools, wages and other costs are fully added.'};
+  if(!staffLogged && t.staffCost === 0) return {kind:'warn', text:'If you paid helpers or staff this month, add those costs too so the picture is complete.'};
+  if(recent <= 3) return {kind:'warn', text:'Every penny counts. Keep logging regularly so nothing gets missed later.'};
+  if(docs < 3) return {kind:'warn', text:'Add or keep more supporting documents so everything is easier when you review or file.'};
+  return {kind:'good', text:'Good — keep going. Your records are building nicely in the background.'};
+}
+
+function hmrcReadiness(){
+  const p=state.profile||{};
+  const needed = [p.fullName,p.address1,p.postcode,p.businessName,p.utr,p.taxCode,p.niNumber];
+  const filled = needed.filter(Boolean).length;
+  return {filled,total:needed.length,complete:filled===needed.length};
+}
+
+function hmrcPrepData(view=state.ui.reportView || 'quarter'){
+  const entries = periodEntries(state.selectedTaxYear, view==='year' ? 'all' : state.selectedQuarter==='all' ? quarterForDate(today(), state.selectedTaxYear) : state.selectedQuarter);
+  const t=totals(entries, state.selectedTaxYear);
+  return {
+    view,
+    periodLabel: view==='year' ? `${state.selectedTaxYear} year-end return` : `${state.selectedTaxYear} ${(state.selectedQuarter==='all' ? quarterForDate(today(), state.selectedTaxYear) : state.selectedQuarter)} quarterly update`,
+    turnover: t.income,
+    expensesExMileage: t.cashExpense,
+    mileage: t.mileageDeduction,
+    staffCosts: t.staffCost,
+    totalDeductions: t.totalDeduction,
+    profit: t.profit,
+    estimatedTax: t.tax,
+    entriesCount: entries.length,
+    deadline: view==='year' ? selectedProfile().deadlines.YEAR_END : selectedProfile().deadlines[(state.selectedQuarter==='all' ? quarterForDate(today(), state.selectedTaxYear) : state.selectedQuarter)]
+  };
+}
+function hmrcPrepText(view=state.ui.reportView || 'quarter'){
+  const d=hmrcPrepData(view);
+  return [
+    `Period: ${d.periodLabel}`,
+    `Deadline: ${formatDateNice(d.deadline)}`,
+    `Entries counted: ${d.entriesCount}`,
+    `Turnover: ${money(d.turnover)}`,
+    `Expenses (excl mileage): ${money(d.expensesExMileage)}`,
+    `Mileage deduction: ${money(d.mileage)}`,
+    `Staff costs: ${money(d.staffCosts)}`,
+    `Total deductions: ${money(d.totalDeductions)}`,
+    `Profit: ${money(d.profit)}`,
+    `Estimated tax: ${money(d.estimatedTax)}`
+  ].join('\n');
+}
+function openPrepScreen(){
+  const d=hmrcPrepData(state.ui.reportView || 'quarter');
+  screen.innerHTML = `
+    <section class="card">
+      <div class="between"><div><div class="sectionTitle">Prepare figures</div><div class="muted">Quarterly update and year-end return views now use your selected tax year and period.</div></div><span class="lightpill">${d.view==='year'?'Year-end':'Quarter'}</span></div>
+      <div class="playActionRow">
+        <button class="chip ${d.view==='quarter'?'green':''}" id="prepQuarterBtn">Quarterly update</button>
+        <button class="chip ${d.view==='year'?'green':''}" id="prepYearBtn">Year-end return</button>
+        <button class="chip" id="backHomeBtn">Back home</button>
+      </div>
+      <div class="homeExplain"><strong>Why this matters</strong><span>TaxTap keeps this page focused on the one thing that matters most: what is actually left after allowable costs and estimated tax. In this build, “You keep” is locked to profit before tax minus estimated tax.</span></div>
+      <div class="callout" style="margin-top:14px"><strong>${d.periodLabel}</strong><div class="tiny" style="margin-top:6px">Deadline ${formatDateNice(d.deadline)} · ${d.entriesCount} entries included</div></div>
+      <div class="softList" style="margin-top:14px">
+        <div class="callout"><strong>Turnover</strong><div class="kpi">${money(d.turnover)}</div></div>
+        <div class="callout"><strong>Expenses (excluding mileage)</strong><div class="kpi">${money(d.expensesExMileage)}</div></div>
+        <div class="callout"><strong>Mileage deduction</strong><div class="kpi">${money(d.mileage)}</div><div class="tiny">Tax deduction, not cash spent.</div></div>
+        <div class="callout"><strong>Staff costs</strong><div class="kpi">${money(d.staffCosts)}</div></div>
+        <div class="callout"><strong>Profit</strong><div class="kpi">${money(d.profit)}</div></div>
+        <div class="callout"><strong>Estimated tax</strong><div class="kpi">${money(d.estimatedTax)}</div></div>
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <button class="chip green" id="copyPrepAll">Copy figures</button>
+        <button class="chip green" id="copyPrepBreakdown">Copy breakdown</button>
+        <button class="chip" id="openHmrcFileBtn">File with HMRC</button>
+      </div>
+      <div class="tiny" style="margin-top:12px">These figures are period-aware and based on your selected rules for ${state.selectedTaxYear}. Review them before any submission.</div>
+    </section>`;
+  bindCommon();
+  document.getElementById('prepQuarterBtn').onclick=()=>{state.ui.reportView='quarter'; save(); openPrepScreen();};
+  document.getElementById('prepYearBtn').onclick=()=>{state.ui.reportView='year'; save(); openPrepScreen();};
+  document.getElementById('copyPrepAll').onclick=async()=>{ try{ await navigator.clipboard.writeText(hmrcPrepText(state.ui.reportView||'quarter')); toast('Figures copied'); }catch{ toast('Copy not available here'); } };
+  document.getElementById('copyPrepBreakdown').onclick=async()=>{ try{ await navigator.clipboard.writeText(hmrcPrepText(state.ui.reportView||'quarter')); toast('Breakdown copied'); }catch{ toast('Copy not available here'); } };
+  document.getElementById('openHmrcFileBtn').onclick=()=>window.open(HMRC_URL,'_blank');
+  document.getElementById('backHomeBtn').onclick=()=>setTab('home');
+}
+function renderHome(){
+  const t=totals(); const keepPct=t.income?Math.max(0,Math.min(100,(t.disposable/t.income)*100)):0;
+  const usual = usualItems(); const nudge=nudgeMessage(); const ready=hmrcReadiness();
+  const nudgeClass = nudge.kind==='bad' ? 'bad' : (nudge.kind==='warn' ? 'warn' : 'good');
+  const deadline=deadlineForSelection();
+  const profile=selectedProfile();
+  const firstUse = (state.entries||[]).length===0;
+  const greet=greetingParts();
+  return `
+    <section class="card hero">
+      <div class="between">
+        <div class="row"><span class="pill">Ready</span><span class="pill">${daysLeft()} days left</span></div>
+        <span class="pill">${ready.complete ? 'Details saved' : ready.filled+'/'+ready.total+' saved'}</span>
+      </div>
+      <div style="margin-top:16px">
+        <span class="pill">✅ Ready check</span>
+        <h2 style="font-size:2rem;margin:14px 0 4px">${quarterHeadline()}</h2>
+        <p style="margin:0 0 6px;opacity:.96">${greet.hello} ${state.userName} · next deadline ${formatDateNice(deadline)}</p><p style="margin:0 0 16px;opacity:.88">${(state.entries||[]).length===0 ? 'Start empty and add your real figures.' : greet.seenText}</p>
+      </div>
+      <div class="grid2">
+        <div class="field"><label style="color:#fff">Tax year</label><select id="homeTaxYearSelect">${taxYearOptions().map(y=>`<option value="${y}" ${state.selectedTaxYear===y?'selected':''}>${y}</option>`).join('')}</select></div>
+        <div class="field"><label style="color:#fff">Period</label><select id="homeQuarterSelect">${quarterOptions().map(q=>`<option value="${q}" ${state.selectedQuarter===q?'selected':''}>${quarterLabel(q, state.selectedTaxYear)}</option>`).join('')}</select></div>
+        <button class="btn primary" id="readyBtn">Ready check</button>
+        <button class="btn secondary" id="prepBtn">Prepare figures</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="between">
+        <div><div class="sectionTitle">Your money</div><div class="muted">Using ${profile.name} rules for ${selectedPeriodLabel()}</div></div>
+        <span class="lightpill">${selectedPeriodLabel()}</span>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,#234d7d,#2c3f93);color:#fff;border:none;margin-top:14px;margin-bottom:12px">
+        <div style="opacity:.9">You keep</div><div class="moneyBig">${money(t.disposable)}</div><div>What is left after tax and tracked business costs.</div>
+      </div>
+      <div class="grid2">
+        <div class="mini"><div class="muted">You made</div><div class="kpi">${money(t.income)}</div><div class="kpiHint">Total income added in this period.</div></div>
+        <div class="mini"><div class="muted">Tax so far</div><div class="kpi">${money(t.tax)}</div><div class="kpiHint">Estimated from the rules in Settings.</div></div>
+        <div class="mini"><div class="muted">Business costs</div><div class="kpi">${money(t.cashExpense)}</div><div class="kpiHint">Costs and staff entries reducing profit.</div></div>
+        <div class="mini"><div class="muted">Profit before tax</div><div class="kpi ${t.profit<0?'bad':'good'}">${money(t.profit)}</div><div class="kpiHint">Profit after allowable costs and mileage, before estimated tax.</div></div>
+      </div>
+      <div style="margin-top:14px" class="bar"><span style="width:${keepPct}%"></span></div>
+      ${t.consistencyOk ? '' : `<div class="gentleNote" style="margin-top:12px;color:#b23f3f">Calculation warning: totals are inconsistent. Check entries and tax profile before relying on this screen.</div>`}
+      <div class="homeExplain"><strong>Why this matters</strong><span>TaxTap keeps this page focused on the one thing that matters most: what is actually left after allowable costs and estimated tax. In this build, “You keep” is locked to profit before tax minus estimated tax.</span></div>
+      <div class="callout" style="margin-top:14px">
+        <div class="between"><strong>How you’re doing</strong><span class="lightpill ${t.disposable<0?'bad':'good'}">${t.disposable<0?'Needs attention':'Good shape'}</span></div>
+        <div class="tiny" style="margin-top:8px">${t.disposable<0?'Right now your disposable income is negative. Focus on missing costs, wage tracking, or extra income.':'You still have money left after tax and tracked costs. Keep feeding the system so this stays accurate.'}</div>
+      </div>
+    </section>
+
+    <section class="card rewardCard">
+      <div class="between"><div class="sectionTitle">Filing confidence</div><span class="lightpill">${ready.filled}/${ready.total}</span></div>
+      <div class="rewardBig">${ready.complete?'Most key details are stored':'Almost there'}</div><div class="kpiHint">${ready.complete?'You have enough stored for a much calmer filing job later.':'A few basics in Settings will make returns much easier later.'}</div>
+      <div class="tiny" style="margin-top:6px">${ready.complete?'You have the main basics stored here for later review.':'Keep filling small missing details in Settings so filing is stress-free.'}</div>
+    </section>
+
+    ${firstUse ? `
+    <section class="card">
+      <div class="emptyState">
+        <div class="emptyTitle">Start simple</div>
+        <div class="muted">Add one real thing and TaxTap starts building your picture quietly in the background.</div>
+        <div class="starterGrid">
+          <button class="starterBtn" id="startIncomeBtn">Add income<small>Good for your first sale or payment</small></button>
+          <button class="starterBtn" id="startExpenseBtn">Add expense<small>Fuel, stock, rent, tools and more</small></button>
+          <button class="starterBtn" id="startMileageBtn">Add mileage<small>Capture business miles in seconds</small></button>
+          <button class="starterBtn" id="startPlayBtn">Play with money<small>Test what changes before you do them</small></button>
+        </div>
+        <div class="helperRow">
+          <span class="helperBadge">Fast input</span>
+          <span class="helperBadge">Tax year handled</span>
+          <span class="helperBadge">What you keep first</span>
+        </div>
+      </div>
+    </section>` : `
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Your usual top 5</div><span class="lightpill">${usual.length} shortcuts</span></div>
+      ${usual.length ? `<div class="chips" style="margin-top:12px">
+        ${usual.map(item=>`<button class="chip useUsual" data-key="${item.key}">${item.label} ${item.type==='mileage' ? (Number(item.miles)+' miles') : moneyShort(item.amount)}</button>`).join('')}
+      </div>
+      <div class="tiny" style="margin-top:12px">TaxTap watches what you add most often and puts it here.</div>` : `<div class="gentleNote" style="margin-top:12px">Your shortcuts appear here after you repeat a few real entries. Once they show up, Add becomes much faster.</div>`}
+    </section>`}
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Repeat payments</div><span class="lightpill warn">${recurringDueText()}</span></div>
+      <div class="sectionIntro">Use this for costs or income that happen every month so TaxTap can quietly keep an eye on them.</div>
+      ${(state.recurring||[]).length ? (state.recurring||[]).slice(0,3).map(item=>`<div class="repeatRow"><div><strong>${item.label}</strong><div class="muted">${money(item.amount)} · monthly · day ${item.dayOfMonth}</div></div><div class="muted">${item.active ? 'On' : 'Off'}</div></div>`).join('') : `<div class="gentleNote" style="margin-top:12px">Turn on repeat when something happens every month and TaxTap will quietly watch for it.</div>`}
+      <button class="btn secondary" id="manageRepeatsBtn" style="margin-top:12px">Open repeat payments</button>
+    </section>
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Mileage</div><span class="lightpill good">${money(t.mileageSaved)} saved</span></div>
+      <div class="chips" style="margin-top:12px">
+        <button class="chip green quickMiles" data-miles="10">+10 miles</button>
+        <button class="chip green quickMiles" data-miles="20">+20 miles</button>
+        ${lastMileageEntry() ? `<button class="chip green" id="sameAsYesterdayBtn">Same as yesterday</button>` : ``}
+        <button class="chip" id="openMileage">Mileage calculator</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Little nudge</div><span class="lightpill ${nudgeClass}">${nudge.kind==='good'?'Good':(nudge.kind==='bad'?'Watch':'Tip')}</span></div>
+      <div class="row" style="gap:14px;margin-top:10px">
+        <div class="successRing">${nudge.kind==='good'?'✓':(nudge.kind==='bad'?'!':'i')}</div>
+        <div style="flex:1"><strong>${nudge.text}</strong></div>
+      </div>
+    </section>
+
+    <section class="footerHelper">
+      <div class="between"><div><div class="footerHelperTitle">Stay on track</div><div class="muted">Small habits keep the app useful and make filing feel easy.</div></div><span class="lightpill">Helpful</span></div>
+      <div class="gentleNote bottomSpacerNote">${(state.entries||[]).length===0?'Add your first item and TaxTap starts building your year quietly in the background.':`You have ${(state.entries||[]).length} saved item${(state.entries||[]).length===1?'':'s'} and ${(state.documents||[]).length} document${(state.documents||[]).length===1?'':'s'} stored.`}</div>
+      <div class="footerHelperActions">
+        <button class="chip" id="footerAddBtn">Add something</button>
+        <button class="chip" id="footerSaveDataBtn">Save my data</button>
+        <button class="chip" id="footerPlayBtn">Try Play</button>
+      </div>
+    </section>`;
+}
+function addFeedbackText(kind, amount){
+  if(kind==='income') return `+${money(amount)} added. That pushes your top line up immediately.`;
+  if(kind==='expense') return `+${money(amount)} added. Rough tax impact about ${money(amount*0.26)}.`;
+  if(kind==='staff') return `+${money(amount)} staff cost added. That helps reflect what the work really cost.`;
+  return `Mileage saved. Allowance value ${money(amount)}.`;
+}
+
+function addForm(){
+  const type=state.ui.addType;
+  const isMileage=type==='mileage';
+  const isExpense=type==='expense';
+  const isStaff=type==='staff';
+  return `
+    <section class="card" id="addFormCard">
+      <div class="between"><div class="sectionTitle">${isMileage?'Mileage calculator':(isExpense?'Add expense':(isStaff?'Add staff cost':'Add income'))}</div><span class="lightpill">${isMileage?'HMRC mileage':(isStaff?'Wages':'Fast add')}</span></div>
+      <div class="sectionIntro">${isMileage?'Enter the miles and TaxTap works out the allowance for you.':(isExpense?'Enter the cost below and it will show up straight away on Home and Timeline.':(isStaff?'Enter the wage cost below and it will feed into your totals straight away.':'Enter the income below and it will show up straight away on Home and Timeline.'))}</div>
+      <div class="stack" style="margin-top:12px">
+        ${isStaff ? `
+          <div class="field"><label>Staff member</label><input id="staffNameInput" value="${(state.ui.staffName||'').replaceAll('"','&quot;')}" placeholder="Ali"></div>
+          <div class="field">
+            <label>Gross pay</label>
+            <div class="smartInput">
+              <div class="displayBox ${state.ui.staffGross===''?'empty':''}">${state.ui.staffGross===''?'<span class="muted">No number yet</span>':money(state.ui.staffGross)}</div>
+              <button class="calcBtn openCalc" data-target="staffGross">Enter amount</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Employer NI</label>
+            <div class="smartInput">
+              <div class="displayBox ${state.ui.staffNI===''?'empty':''}">${state.ui.staffNI===''?'<span class="muted">Optional</span>':money(state.ui.staffNI)}</div>
+              <button class="calcBtn openCalc" data-target="staffNI">Enter amount</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Pension</label>
+            <div class="smartInput">
+              <div class="displayBox ${state.ui.staffPension===''?'empty':''}">${state.ui.staffPension===''?'<span class="muted">Optional</span>':money(state.ui.staffPension)}</div>
+              <button class="calcBtn openCalc" data-target="staffPension">Enter amount</button>
+            </div>
+          </div>
+          <div class="mini"><div class="muted">Total staff cost</div><div class="kpi">${money(Number(state.ui.staffGross||0)+Number(state.ui.staffNI||0)+Number(state.ui.staffPension||0))}</div><div class="tiny">Track what a staff member actually cost you without turning this into payroll software.</div></div>
+        ` : `
+          <div class="field">
+            <label>${isMileage?'Miles':'Amount'}</label>
+            <div class="smartInput">
+              <div class="displayBox ${((isMileage?state.ui.miles:state.ui.amount)===''?'empty':'')}">${(isMileage?(state.ui.miles===''?'<span class="muted">No number yet</span>':state.ui.miles+' miles'):(state.ui.amount===''?'<span class="muted">No number yet</span>':money(state.ui.amount)))}</div>
+              <button class="calcBtn openCalc" data-target="${isMileage?'miles':'amount'}">Enter amount</button>
+            </div>
+          </div>
+        `}
+        ${isMileage?`
+          <div class="chips">
+            <button class="chip green setMiles" data-miles="10">10</button>
+            <button class="chip green setMiles" data-miles="20">20</button>
+            <button class="chip green setMiles" data-miles="30">30</button>
+            <button class="chip green setMiles" data-miles="40">40</button>
+          </div>
+          <div class="mini"><div class="muted">Allowance value</div><div class="kpi">${money(mileageAllowance(state.ui.miles||0))}</div><div class="tiny">Uses your saved mileage rates.</div></div>
+        ` : (!isStaff ? `
+          <div class="field"><label>Category</label>
+            <select id="categoryInput">${(isExpense?['Fuel','Phone','Tools','Supplies','Travel','Rent','Coffee','Other expense']:['Invoice','Sales','Cash job','Other income']).map(x=>`<option ${state.ui.category===x?'selected':''}>${x}</option>`).join('')}</select>
+          </div>
+        ` : '')}
+        <div class="field"><label>${isStaff?'Note':'Note'}</label><input id="noteInput" value="${(state.ui.note||'').replaceAll('"','&quot;')}" placeholder="${isMileage?'Customer visit / supplier run':(isExpense?'What was it for?':(isStaff?'Shift / helper / role':'Who paid you?'))}"></div>
+        <div class="field"><label>Date</label><input type="date" id="dateInput" value="${state.ui.date}"></div>
+        ${(!isMileage && type!=='income') ? `
+        <div class="mini">
+          <div class="between"><strong>Repeat payment</strong><label class="switch"><input type="checkbox" id="repeatEnabled" ${state.ui.repeatEnabled ? 'checked' : ''}> On</label></div>
+          <div class="stack" id="repeatFields" style="${state.ui.repeatEnabled ? '' : 'display:none'};margin-top:12px">
+            <div class="field"><label>Label</label><input id="repeatLabelInput" value="${(state.ui.repeatLabel||'').replaceAll('"','&quot;')}" placeholder="${isStaff?'Weekly helper':'Workshop rent'}"></div>
+            <div class="field"><label>Frequency</label><select id="repeatFrequency"><option ${state.ui.repeatFrequency==='monthly'?'selected':''}>monthly</option></select></div>
+            <div class="field"><label>Day of month</label><select id="repeatDay">${Array.from({length:28},(_,i)=>i+1).map(d=>`<option value="${d}" ${String(state.ui.repeatDay)===String(d)?'selected':''}>${d}</option>`).join('')}</select></div>
+          </div>
+        </div>` : ''}
+        <div class="stack" style="gap:10px">
+          <button class="btn primary" id="${isMileage?'saveMileageBtn':'saveEntryBtn'}">${state.ui.editingEntryId ? (isMileage?'Update mileage':(isStaff?'Update staff cost':(isExpense?'Update expense':'Update income'))) : (isMileage?'Save mileage':(isStaff?'Save staff cost':(isExpense?'Save expense':'Save income')))}</button>
+          ${state.ui.editingEntryId ? '<button class="btn secondary" id="cancelEditBtn">Cancel editing</button>' : ''}
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderAdd(){
+  const last=state.entries[0];
+  const usual = usualItems();
+  return `
+    <section class="card actionHero" id="addTopCard">
+      <div class="between">
+        <div><div class="sectionTitle" style="color:#fff">Add something</div><div style="opacity:.86">Fast, friendly, low-thinking input.</div></div>
+        <span class="pill">Quick win</span>
+      </div>
+      <div class="actionGrid">
+        <button class="actionBtn income mainAction" data-type="income"><span>＋ Add income</span><span>›</span></button>
+        <button class="actionBtn expense mainAction" data-type="expense"><span>－ Add expense</span><span>›</span></button>
+        <button class="actionBtn travel mainAction" data-type="mileage"><span>🚗 Mileage</span><span>›</span></button>
+        <button class="actionBtn staff mainAction" data-type="staff"><span>👥 Staff cost</span><span>›</span></button>
+        <button class="actionBtn play" id="gotoPlay"><span>🎮 Play with money</span><span>›</span></button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Your top 5</div><span class="lightpill">${usual.length} ready</span></div><div class="sectionIntro">Your most repeated real entries appear here so common adds become one tap.</div><div class="tiny" style="margin-top:8px">Anything you save here shows up on Home and Timeline automatically.</div>
+      ${usual.length ? `<div class="chips" style="margin-top:12px">
+        ${usual.map(item=>`<button class="chip useUsual" data-key="${item.key}">${item.label} ${item.type==='mileage' ? (Number(item.miles)+' miles') : moneyShort(item.amount)}</button>`).join('')}
+      </div>` : `<div class="gentleNote" style="margin-top:12px">Use Add a few times and your most repeated entries will appear here.</div>`}
+    </section>
+
+    ${addForm()}
+
+    <section class="card rewardCard">
+      <div class="between"><div class="sectionTitle">Quick wins</div><span class="lightpill">Fast wins</span></div>
+      <div class="tiny">Tap one and it saves right away. Small wins should feel instant.</div>
+      <div class="chips" style="margin-top:12px">
+        <button class="chip alt quickExpense" data-amount="15" data-cat="Fuel">Fuel £15</button>
+        <button class="chip alt quickExpense" data-amount="30" data-cat="Phone">Phone £30</button>
+        <button class="chip alt quickExpense" data-amount="45" data-cat="Tools">Tools £45</button>
+        <button class="chip alt quickExpense" data-amount="60" data-cat="Supplies">Supplies £60</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">One-tap repeat</div><span class="lightpill">1 tap</span></div><div class="sectionIntro">Use this for something you do often so you do not have to type it all again.</div>
+      <div class="entry">
+        <div><strong>${last?entryTitle(last):'No previous entry yet'}</strong><div class="muted">${last?money(last.amount)+' · '+(last.note||last.category||''):'Add one entry first'}</div></div>
+        <button class="btn secondary" id="sameAsLastBtn" ${last?'':'disabled style="opacity:.5;cursor:not-allowed"'}>${last?'Use again':'Add first entry'}</button>
+      </div>
+    </section>`;
+}
+
+function renderPlay(){
+  const t=totals();
+  const p=playResults();
+  const keepDelta = p.keepAfter - t.keep;
+  const dispDelta = p.disposableAfter - t.disposable;
+  const hasChange = Number(state.ui.playIncome||0) || Number(state.ui.playExpense||0) || Number(state.ui.playMiles||0) || Number(state.ui.playStaff||0);
+  const paceText = p.keepAfter>t.keep ? 'That is real progress you can feel in real life.' : 'Try a change and see what happens before you make it real.';
+  return `
+    <section class="card playHero playPageHero">
+      <div class="between">
+        <div>
+          <div class="sectionTitle">Your comparison board</div>
+          <div class="muted playTopNote">Try a change to see what you would actually keep.</div>
+        </div>
+        <span class="lightpill">Live update</span>
+      </div>
+
+      <div class="playSummaryGrid tight">
+        <div class="playScore compact nowCard"><div class="tag">Now</div><div class="muted" style="margin-top:8px">You keep now</div><div class="moneyBig">${money(t.keep)}</div><div class="tiny">Current disposable ${money(t.disposable)}</div></div>
+        <div class="playScore compact"><div class="tag">After this change</div><div class="muted" style="margin-top:8px">You would keep</div><div class="moneyBig">${money(p.keepAfter)}</div><div class="${keepDelta>=0?'deltaUp':'deltaDown'}" style="margin-top:4px">${keepDelta>=0?'+':''}${money(keepDelta)}</div><div class="tiny">Disposable after your move ${money(p.disposableAfter)}</div></div>
+      </div>
+
+      ${hasChange ? `<div class="playCalloutCompact"><strong>${paceText}</strong>${keepDelta>=0?`<div class="tiny" style="margin-top:4px">${money(p.keepAfter)} kept — that is real progress.</div>`:''}</div>` : `<div class="playGuide"><strong>Start here</strong><div class="tiny">Pick one button below, enter a number, and TaxTap updates the result instantly.</div></div>`}
+
+      <div class="playQuickGrid compact">
+        <button class="playQuickBtn compact openCalc" data-target="playIncome"><strong>I earned more</strong><span>Extra sales or a bigger invoice.</span><span class="miniValue">${state.ui.playIncome?money(state.ui.playIncome):'Enter amount'}</span></button>
+        <button class="playQuickBtn compact openCalc" data-target="playExpense"><strong>I spent more</strong><span>Tools, rent or one-off spending.</span><span class="miniValue">${state.ui.playExpense?money(state.ui.playExpense):'Enter amount'}</span></button>
+        <button class="playQuickBtn compact openCalc" data-target="playMiles"><strong>I drove more</strong><span>Tax relief is worked out for you.</span><span class="miniValue">${state.ui.playMiles?`${Number(state.ui.playMiles).toLocaleString('en-GB')} miles`:'Enter amount'}</span></button>
+        <button class="playQuickBtn compact openCalc" data-target="playStaff"><strong>I paid staff</strong><span>Test wages before making them real.</span><span class="miniValue">${state.ui.playStaff?money(state.ui.playStaff):'Enter amount'}</span></button>
+      </div>
+
+      <div class="playActionRow">
+        <button class="chip" id="resetPlayBtn">Reset this scenario</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">What changes</div><span class="lightpill">Simple view</span></div>
+      <div class="playChangesGrid">
+        <div class="playScore compact"><div class="muted">Estimated tax</div><div class="kpi">${money(p.taxAfter)}</div><div class="kpiHint">Your estimate after this test change.</div><div class="tiny">This updates as soon as you test a different amount.</div></div>
+        <div class="playScore compact"><div class="muted">Tax saved from mileage</div><div class="kpi">${money(p.mileageValue)}</div><div class="tiny">Reduces tax, not cash spent.</div></div>
+        <div class="playScore compact playImpactCard"><div class="disposable-change"><h3>Your take-home change</h3><div class="value ${dispDelta<0?'negative':''} ${dispDelta>=0?'deltaUp':'deltaDown'}">${dispDelta>=0?'+':''}${money(dispDelta)}</div><div class="impact-line">${dispDelta>=0?`You would keep ${money(dispDelta)} more`:`You would keep ${money(Math.abs(dispDelta))} less`}</div><div class="impact-sub">${dispDelta>=0?'Your disposable income rises':'Your disposable income drops'}</div><div class="impact-compare"><span>Now: ${money(t.disposable)}</span><span>After: ${money(p.disposableAfter)}</span></div></div></div>
+        <div class="playScore compact make-real-card"><div class="make-real-title">Make this real</div><div class="make-real-line">Move your test into TaxTap when you are ready</div><div class="make-real-sub">Pick what you want to save and TaxTap takes you straight back to Add with the number ready to use.</div><div class="make-real-grid">
+          <button class="chip green" id="usePlayIncome">Add income</button>
+          <button class="chip green" id="usePlayExpense">Add cost</button>
+          <button class="chip green" id="usePlayMiles">Add miles</button>
+          <button class="chip green" id="usePlayStaff">Add staff</button>
+        </div><div class="make-real-tip">Best for turning a useful test into a real entry in one tap.</div></div>
+      </div>
+    </section>`;
+}
+
+function renderTimeline(){
+  const entries=periodEntries();
+  const t=totals(entries, state.selectedTaxYear);
+  const staff=staffSummary(entries);
+  return `
+    <section class="card">
+      <div class="between"><div><div class="sectionTitle">Timeline</div><div class="muted">This is everything you have added — use it to check and fix mistakes.</div></div><span class="lightpill">${entries.length} shown / ${(state.entries||[]).length} total</span></div><div class="sectionIntro">Use the filters to review one period at a time, then edit or delete anything that needs correcting.</div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="field"><label>Tax year</label><select id="timelineTaxYearSelect">${taxYearOptions().map(y=>`<option value="${y}" ${state.selectedTaxYear===y?'selected':''}>${y}</option>`).join('')}</select></div>
+        <div class="field"><label>Period</label><select id="timelineQuarterSelect">${quarterOptions().map(q=>`<option value="${q}" ${state.selectedQuarter===q?'selected':''}>${quarterLabel(q, state.selectedTaxYear)}</option>`).join('')}</select></div>
+      </div>
+      <div class="helperRow" style="margin-top:10px">
+        <button class="chip" id="deleteVisibleEntriesBtn">Delete visible period</button>
+        <button class="chip" id="deleteAllEntriesBtn">Delete all entries</button>
+      </div>
+      ${entries.length ? entries.map((e)=>`<div class="entry">
+        <div style="flex:1"><strong>You added ${money(e.amount)} ${entryTitle(e).toLowerCase()}</strong>
+          <div class="muted">${e.date}${e.note||e.category?` · ${e.note||e.category}`:''}</div>
+          <div class="timelineHint">Tap edit or delete if this needs correcting.</div>
+          ${e.autoAdded ? `<div class="tag auto" style="margin-top:8px">Auto</div>` : ``}
+        </div>
+        <div style="text-align:right">
+          <strong>${money(e.amount)}</strong>
+          <div class="inlineActions" style="margin-top:8px;justify-content:flex-end">
+            <button class="linkBtn editEntryBtn" data-id="${e.id}">Edit</button>
+            <button class="linkBtn deleteEntryBtn" data-id="${e.id}">Delete</button>
+          </div>
+        </div>
+      </div>`).join('') : `<div class="timelineEmptyPlus"><strong>Nothing here yet.</strong><div class="tiny" style="margin-top:6px">Add income, costs or mileage and this page becomes your running record automatically.</div><div class="emptyActions"><button class="chip" id="timelineEmptyAddBtn">Add something</button><button class="chip" id="timelineEmptyPlayBtn">Open Play</button></div></div>`}
+    </section>
+    <section class="card">
+      <div class="timelineMetaGrid">
+        <div class="noteCard"><strong>What you are viewing</strong><span>${selectedPeriodLabel()} under tax year ${state.selectedTaxYear}. This keeps review simple and avoids mixing periods.</span></div>
+        <div class="noteCard"><strong>Using this page well</strong><span>Edit mistakes here, delete duplicates, and use Add for anything new. Keep this page clean and your totals stay trustworthy.</span></div>
+      </div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="mini"><div class="muted">Mileage deduction</div><div class="kpi">${money(t.mileageDeduction)}</div></div>
+        <div class="mini"><div class="muted">Staff cost total</div><div class="kpi">${money(t.staffCost)}</div></div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Staff summary</div><span class="lightpill">${staff.length} people</span></div>
+      ${staff.length ? staff.map(s=>`<div class="repeatRow"><div><strong>${s.name}</strong><div class="muted">${s.count} item${s.count===1?'':'s'}</div></div><div><strong>${money(s.total)}</strong></div></div>`).join('') : `<div class="tiny" style="margin-top:10px">No staff costs in this period yet. When you add wages, the people summary appears here automatically.</div>`}
+    </section>
+    <section class="card">
+      <div class="sectionTitle">Documents</div>
+      ${state.documents.length ? state.documents.map(d=>`<div class="entry"><div><strong>${d.name}</strong><div class="muted">Stored reference · ${d.kind}</div></div><div class="muted">Saved</div></div>`).join('') : `<div class="gentleNote" style="margin-top:12px">You can keep references here later if you want, but TaxTap is built to stay simple.</div>`}
+    </section>
+    <section class="footerHelper">
+      <div class="between"><div><div class="footerHelperTitle">Stay on track</div><div class="muted">Small habits make the app more useful and tax time feel easier.</div></div><span class="lightpill">Helpful</span></div>
+      <div class="gentleNote bottomSpacerNote">${entries.length===0?'This period is empty right now. Add one thing and your timeline starts building itself.':`This period has ${entries.length} item${entries.length===1?'':'s'} and ${state.documents.length} saved document${state.documents.length===1?'':'s'}.`}</div>
+      <div class="footerHelperActions">
+        <button class="chip" id="footerAddBtn">Add something</button>
+        <button class="chip" id="footerSaveDataBtn">Save my data</button>
+        <button class="chip" id="footerPlayBtn">Try Play</button>
+      </div>
+    </section>`;
+}
+function renderSettings(){
+  const ready=hmrcReadiness();
+  const year=state.activeSettingsYear || state.selectedTaxYear;
+  const profile=profileForYear(year);
+  const audit=(state.auditLog||[]).slice(0,12);
+  return `
+    <section class="card">
+      <div class="between"><div><div class="sectionTitle">Your details</div><div class="muted">Store the basics here so tax time feels easier later.</div></div><span class="lightpill">${ready.filled}/${ready.total}</span></div><div class="sectionIntro">This is your calm control page. Save your identity, your default tax year rules, and the dates you want TaxTap to follow.</div>
+      <div class="settingsGridCompact" style="margin-top:12px">
+        <div class="field"><label>Full name</label><input id="fullNameInput" value="${(state.profile.fullName||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Business name</label><input id="businessNameInput" value="${(state.profile.businessName||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Address line 1</label><input id="address1Input" value="${(state.profile.address1||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Town / city</label><input id="address2Input" value="${(state.profile.address2||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Postcode</label><input id="postcodeInput" value="${(state.profile.postcode||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Email</label><input id="emailInput" value="${(state.profile.email||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Phone</label><input id="phoneInput" value="${(state.profile.phone||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>UTR</label><input id="utrInput" value="${(state.profile.utr||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>Tax code</label><input id="taxCodeInput" value="${(state.profile.taxCode||'').replaceAll('"','&quot;')}"></div>
+        <div class="field"><label>NI number</label><input id="niInput" value="${(state.profile.niNumber||'').replaceAll('"','&quot;')}"></div>
+      </div>
+      <div class="infoStrip">These details stay local to this device unless you choose to save or load your own data file.</div>
+    </section>
+
+    <section class="card" id="settingsRulesCard">
+      <div class="between"><div><div class="sectionTitle">Tax settings</div><div class="muted">Change rates, bands, NI, mileage and deadlines here if the rules move.</div></div><span class="lightpill">${year}</span></div><div class="trustPanel"><strong style="color:#1f3566">Why this page matters</strong><div class="sectionIntro" style="margin-top:6px">If government thresholds change, this is the only place you need to update the default layer. The app logic stays the same.</div><div class="trustGrid"><div class="trustItem"><strong>Tax</strong><span>Allowance, bands and NI drive the estimate logic.</span></div><div class="trustItem"><strong>Mileage</strong><span>Primary and secondary rates control mileage relief.</span></div><div class="trustItem"><strong>Deadlines</strong><span>Quarter and year-end dates keep reminders in step.</span></div></div></div>
+      <div class="stack" style="margin-top:12px">
+        <div class="settingsGridCompact">
+          <div class="field"><label>Tax year</label><select id="settingsYearSelect">${taxYearOptions().map(y=>`<option value="${y}" ${year===y?'selected':''}>${y}</option>`).join('')}</select></div>
+          <div class="field"><label>Profile name</label><input id="profileNameInput" value="${(profile.name||'').replaceAll('"','&quot;')}"></div>
+          <div class="field"><label>Personal allowance</label><input id="personalAllowanceInput" type="number" step="1" min="0" value="${Number(profile.personalAllowance||0)}"></div>
+          <div class="field"><label>Basic rate</label><input id="basicRateInput" type="number" step="0.01" min="0" max="1" value="${Number(profile.basicRate||0).toFixed(2)}"></div>
+          <div class="field"><label>Higher rate</label><input id="higherRateInput" type="number" step="0.01" min="0" max="1" value="${Number(profile.higherRate||0).toFixed(2)}"></div>
+          <div class="field"><label>Additional rate</label><input id="additionalRateInput" type="number" step="0.01" min="0" max="1" value="${Number(profile.additionalRate||0).toFixed(2)}"></div>
+          <div class="field"><label>Basic band</label><input id="basicBandInput" type="number" step="1" min="0" value="${Number(profile.basicBand||0)}"></div>
+          <div class="field"><label>Higher threshold</label><input id="higherThresholdInput" type="number" step="1" min="0" value="${Number(profile.higherThreshold||0)}"></div>
+          <div class="field"><label>Additional threshold</label><input id="additionalThresholdInput" type="number" step="1" min="0" value="${Number(profile.additionalThreshold||0)}"></div>
+          <div class="field"><label>Class 4 NI main rate</label><input id="class4MainRateInput" type="number" step="0.01" min="0" max="1" value="${Number(profile.class4MainRate||0).toFixed(2)}"></div>
+          <div class="field"><label>Class 4 NI upper rate</label><input id="class4UpperRateInput" type="number" step="0.01" min="0" max="1" value="${Number(profile.class4UpperRate||0).toFixed(2)}"></div>
+          <div class="field"><label>Class 4 lower profits limit</label><input id="class4LowerProfitsLimitInput" type="number" step="1" min="0" value="${Number(profile.class4LowerProfitsLimit||0)}"></div>
+          <div class="field"><label>Class 4 upper profits limit</label><input id="class4UpperProfitsLimitInput" type="number" step="1" min="0" value="${Number(profile.class4UpperProfitsLimit||0)}"></div>
+          <div class="field"><label>First 10,000 miles</label><input id="mileagePrimaryInput" type="number" step="0.01" min="0" value="${Number(profile.mileage.primary||0).toFixed(2)}"></div>
+          <div class="field"><label>After 10,000 miles</label><input id="mileageSecondaryInput" type="number" step="0.01" min="0" value="${Number(profile.mileage.secondary||0).toFixed(2)}"></div>
+          <div class="field"><label>Mileage limit</label><input id="mileageLimitInput" type="number" step="1" min="0" value="${Number(profile.mileage.limit||0)}"></div>
+          <div class="field"><label>Q1 deadline</label><input id="deadlineQ1Input" type="date" value="${profile.deadlines.Q1||''}"></div>
+          <div class="field"><label>Q2 deadline</label><input id="deadlineQ2Input" type="date" value="${profile.deadlines.Q2||''}"></div>
+          <div class="field"><label>Q3 deadline</label><input id="deadlineQ3Input" type="date" value="${profile.deadlines.Q3||''}"></div>
+          <div class="field"><label>Q4 deadline</label><input id="deadlineQ4Input" type="date" value="${profile.deadlines.Q4||''}"></div>
+          <div class="field"><label>Year-end deadline</label><input id="deadlineYearEndInput" type="date" value="${profile.deadlines.YEAR_END||''}"></div>
+        </div>
+        <div class="callout"><strong>Using ${selectedPeriodLabel()}</strong><div class="tiny" style="margin-top:6px">Next deadline ${formatDateNice(deadlineForSelection())}</div></div><div class="noteGrid"><div class="noteCard"><strong>Future-proofing</strong><span>You can leave the app alone year to year and only update these values when rules move.</span></div><div class="noteCard"><strong>Best habit</strong><span>Save your tax settings once, then use the same tax year everywhere so Home, Add, Play and Timeline stay aligned.</span></div></div>
+        <div class="chips">
+          <button class="chip green" id="saveRuleProfileBtn">Save tax settings</button>
+          <button class="chip" id="useThisYearBtn">Use this tax year everywhere</button>
+          <button class="chip" id="exportDataBtn">Save my data</button>
+          <button class="chip" id="importDataBtn">Retrieve my data</button>
+          <button class="chip" id="showWelcomeBtn">Show welcome</button>
+          <button class="chip" id="restoreResetBackupBtn">Recover reset data</button>
+          <button class="chip" id="removeTestDataBtn">Remove old test data</button>
+          <button class="chip" id="resetAppBtn">Reset this device</button>
+          <button class="chip" id="hmrcGuideBtn">File with HMRC</button>
+        </div>
+        <input id="importDataFile" type="file" accept="application/json" style="display:none">
+      </div>
+    </section>
+    <section class="card">
+      <div class="sectionTitle">Repeat payments</div>
+      <div class="sectionIntro">Use this for costs or income that happen every month so TaxTap can quietly keep an eye on them.</div>
+      ${(state.recurring||[]).map(item=>`<div class="repeatRow"><div><strong>${item.label}</strong><div class="muted">${money(item.amount)} · monthly · day ${item.dayOfMonth}</div></div><label class="switch"><input type="checkbox" class="repeatToggle" data-id="${item.id}" ${item.active ? 'checked' : ''}> ${item.active ? 'On' : 'Off'}</label></div>`).join('')}
+    </section>
+
+    <section class="card">
+      <div class="between"><div class="sectionTitle">Audit trail</div><span class="lightpill">${audit.length} recent</span></div>
+      ${audit.map(item=>`<div class="entry"><div><strong>${item.action}</strong><div class="muted">${new Date(item.at).toLocaleString('en-GB')} · ${item.detail||''}</div></div><div class="muted">Logged</div></div>`).join('')}
+      <div class="tiny" style="margin-top:8px">This is a light local audit trail for changes, repeats and key actions.</div>
+    </section>`;
+}
+function clearEditingState(){
+  state.ui.editingEntryId=null;
+}
+function resetAddFormForType(type=state.ui.addType){
+  state.ui.addType=type;
+  state.ui.amount='';
+  state.ui.category='';
+  state.ui.note='';
+  state.ui.miles='';
+  state.ui.repeatEnabled=false;
+  state.ui.repeatLabel='';
+  state.ui.repeatFrequency='monthly';
+  state.ui.repeatDay='1';
+  state.ui.staffName='';
+  state.ui.staffGross='';
+  state.ui.staffNI='';
+  state.ui.staffPension='';
+  state.ui.date=today();
+  clearEditingState();
+}
+function editEntry(entryId){
+  const e=(state.entries||[]).find(x=>String(x.id)===String(entryId));
+  if(!e) return;
+  clearEditingState();
+  state.ui.editingEntryId = e.id;
+  state.ui.repeatEnabled=false;
+  state.ui.repeatLabel='';
+  if(e.type==='mileage'){
+    state.ui.addType='mileage';
+    state.ui.amount='';
+    state.ui.category='Travel';
+    state.ui.miles=String(e.miles||'');
+    state.ui.note=e.note||'';
+  } else if(e.type==='staff'){
+    state.ui.addType='staff';
+    state.ui.amount='';
+    state.ui.category='Staff cost';
+    state.ui.staffName=(e.note||'').split(' · ')[0] || '';
+    state.ui.staffGross=String(e.grossPay||e.amount||'');
+    state.ui.staffNI=String(e.employerNI||'');
+    state.ui.staffPension=String(e.pension||'');
+    state.ui.note=e.note||'';
+  } else {
+    state.ui.addType=e.type||'expense';
+    state.ui.amount=String(e.amount||'');
+    state.ui.category=e.category||'';
+    state.ui.note=e.note||'';
+    state.ui.miles='';
+  }
+  state.ui.date=e.date||today();
+  logAction('Entry edit opened', `${e.type} loaded into Add on ${e.date||today()}`);
+  save();
+  setTab('add');
+  toast('Entry ready to edit');
+}
+
+function deleteEntry(entryId){
+  const before=(state.entries||[]).length;
+  state.entries = (state.entries||[]).filter(x=>String(x.id)!==String(entryId));
+  if(state.entries.length !== before){ logAction('Entry deleted', `Removed item ${entryId}`); save(); render(); toast('Entry deleted'); }
+}
+function bindCommon(){
+  document.querySelectorAll('.nav').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.tab===state.currentTab);
+    btn.onclick=()=>setTab(btn.dataset.tab);
+  });
+  const installBtn=document.getElementById('installBtn'); if(installBtn) installBtn.onclick=()=>toast('Saved on this device. Use Save my data anytime.');
+  document.querySelectorAll('.openCalc').forEach(btn=>btn.onclick=()=>openCalc(btn.dataset.target));
+  document.querySelectorAll('.useUsual').forEach(btn=>btn.onclick=()=>applyUsual(btn.dataset.key));
+}
+
+function bindHome(){
+  document.getElementById('readyBtn').onclick=()=>{
+    const ready=hmrcReadiness();
+    toast(ready.complete ? 'Most key details are saved.' : `You have ${ready.filled}/${ready.total} key details saved so far.`);
+  };
+  document.getElementById('prepBtn').onclick=()=>openPrepScreen();
+  document.getElementById('openMileage').onclick=()=>{state.ui.addType='mileage';save();setTab('add');};
+  document.getElementById('manageRepeatsBtn').onclick=()=>setTab('settings');
+  const homeTaxYear=document.getElementById('homeTaxYearSelect');
+  if(homeTaxYear) homeTaxYear.onchange=()=>{state.selectedTaxYear=homeTaxYear.value; state.taxProfileName=profileForYear(homeTaxYear.value).name; save(); render();};
+  const homeQuarter=document.getElementById('homeQuarterSelect');
+  if(homeQuarter) homeQuarter.onchange=()=>{state.selectedQuarter=homeQuarter.value; save(); render();};
+  document.querySelectorAll('.quickMiles').forEach(btn=>btn.onclick=()=>{
+    const miles=Number(btn.dataset.miles||0), amount=mileageAllowance(miles);
+    addEntry({type:'mileage',amount,miles,category:'Travel',note:'Quick mileage',date:today()});
+    toast(addFeedbackText('mileage', amount));
+    render();
+  });
+  const startIncomeBtn=document.getElementById('startIncomeBtn'); if(startIncomeBtn) startIncomeBtn.onclick=()=>{ resetAddFormForType('income'); setTab('add'); toast('Start with your first income'); };
+  const startExpenseBtn=document.getElementById('startExpenseBtn'); if(startExpenseBtn) startExpenseBtn.onclick=()=>{ resetAddFormForType('expense'); setTab('add'); toast('Start with your first expense'); };
+  const startMileageBtn=document.getElementById('startMileageBtn'); if(startMileageBtn) startMileageBtn.onclick=()=>{ resetAddFormForType('mileage'); setTab('add'); toast('Start with your first mileage entry'); };
+  const startPlayBtn=document.getElementById('startPlayBtn'); if(startPlayBtn) startPlayBtn.onclick=()=>setTab('play');
+  const sameBtn=document.getElementById('sameAsYesterdayBtn');
+  if(sameBtn) sameBtn.onclick=()=>{
+    const last=lastMileageEntry();
+    if(!last) return;
+    addEntry({type:'mileage',amount:mileageAllowance(last.miles||0),miles:Number(last.miles||0),category:'Travel',note:last.note||'Mileage',date:today()});
+    toast('Yesterday’s mileage added again');
+    render();
+  };
+}
+function scrollAddIntoView(focusTarget='amount'){
+  requestAnimationFrame(()=>{
+    const card=document.getElementById('addFormCard');
+    if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+    const saveBtn=document.getElementById(focusTarget==='miles' ? 'saveMileageBtn' : 'saveEntryBtn');
+    if(saveBtn){
+      saveBtn.style.boxShadow='0 0 0 3px rgba(37,99,235,.18)';
+      setTimeout(()=>{saveBtn.style.boxShadow='';}, 1800);
+    }
+  });
+}
+function bindAdd(){
+  document.querySelectorAll('.mainAction').forEach(btn=>btn.onclick=()=>{
+    resetAddFormForType(btn.dataset.type);
+    save(); render();
+    scrollAddIntoView(btn.dataset.type==='mileage' ? 'miles' : 'amount');
+  });
+  document.getElementById('gotoPlay').onclick=()=>setTab('play');
+  document.querySelectorAll('.quickExpense').forEach(btn=>btn.onclick=()=>{
+    const amount=Number(btn.dataset.amount||0), cat=btn.dataset.cat||'Expense';
+    addEntry({type:'expense',amount,category:cat,note:'Quick add',date:today()});
+    toast(cat+' saved in one tap');
+    render();
+  });
+  document.getElementById('sameAsLastBtn').onclick=()=>{
+    const e=state.entries[0]; if(!e) return toast('Nothing to repeat yet');
+    const {id,...copy}=e; addEntry({...copy,date:today()}); toast('Repeated last entry'); render();
+  };
+  const note=document.getElementById('noteInput'); if(note) note.oninput=()=>{state.ui.note=note.value; save();};
+  const date=document.getElementById('dateInput'); if(date) date.onchange=()=>{state.ui.date=date.value; save();};
+  const cat=document.getElementById('categoryInput'); if(cat) cat.onchange=()=>{state.ui.category=cat.value; save();};
+  document.querySelectorAll('.setMiles').forEach(btn=>btn.onclick=()=>{state.ui.miles=btn.dataset.miles; save(); render(); scrollAddIntoView('miles'); toast('Miles ready — save when happy');});
+  const staffName=document.getElementById('staffNameInput'); if(staffName) staffName.oninput=()=>{state.ui.staffName=staffName.value; save();};
+  const repeatEnabled=document.getElementById('repeatEnabled');
+  if(repeatEnabled){ repeatEnabled.onchange=()=>{state.ui.repeatEnabled = repeatEnabled.checked; save(); render();}; }
+  const repeatLabelInput=document.getElementById('repeatLabelInput');
+  if(repeatLabelInput) repeatLabelInput.oninput=()=>{state.ui.repeatLabel = repeatLabelInput.value; save();};
+  const repeatFrequency=document.getElementById('repeatFrequency');
+  if(repeatFrequency) repeatFrequency.onchange=()=>{state.ui.repeatFrequency = repeatFrequency.value; save();};
+  const repeatDay=document.getElementById('repeatDay');
+  if(repeatDay) repeatDay.onchange=()=>{state.ui.repeatDay = repeatDay.value; save();};
+  const saveEntryBtn=document.getElementById('saveEntryBtn');
+  if(saveEntryBtn) saveEntryBtn.onclick=()=>{
+    const type=state.ui.addType;
+    const editingId=state.ui.editingEntryId;
+    if(type==='staff'){
+      const gross=Number(state.ui.staffGross||0), ni=Number(state.ui.staffNI||0), pension=Number(state.ui.staffPension||0), total=gross+ni+pension;
+      if(total<=0) return toast('Enter amount first');
+      const noteText = [state.ui.staffName||'Staff', state.ui.note||''].filter(Boolean).join(' · ');
+      const entry = {type:'staff',amount:total,category:'Staff cost',note:noteText,date:state.ui.date||today(),grossPay:gross,employerNI:ni,pension:pension};
+      if(editingId){ updateEntry(editingId, entry); } else {
+        addEntry(entry);
+        if(state.ui.repeatEnabled){
+          const label = state.ui.repeatLabel || state.ui.staffName || 'Repeat staff cost';
+          state.recurring.unshift({id:uid(), label, type:'staff', amount:total, category:'Staff cost', note:noteText, frequency:'monthly', dayOfMonth:Number(state.ui.repeatDay||1), active:true, lastAutoAddedMonth:currentMonth()});
+        }
+      }
+      toast(editingId ? 'Staff cost updated' : addFeedbackText('staff', total));
+      resetAddFormForType('staff'); save(); render();
+      return;
+    }
+    const amount=Number(state.ui.amount||0); if(amount<=0) return toast('Enter amount first');
+    const entry = {type:state.ui.addType,amount,category:state.ui.category||(state.ui.addType==='income'?'Invoice':'Expense'),note:state.ui.note||'',date:state.ui.date||today()};
+    if(editingId){ updateEntry(editingId, entry); } else {
+      addEntry(entry);
+      if(state.ui.repeatEnabled && state.ui.addType!=='income'){
+        const label = state.ui.repeatLabel || state.ui.note || state.ui.category || 'Repeat payment';
+        state.recurring.unshift({id:uid(), label, type:state.ui.addType, amount, category:entry.category, note:entry.note, frequency:'monthly', dayOfMonth:Number(state.ui.repeatDay || 1), active:true, lastAutoAddedMonth:currentMonth()});
+      }
+    }
+    toast(editingId ? 'Entry updated' : addFeedbackText(state.ui.addType, amount));
+    resetAddFormForType(state.ui.addType); save(); render();
+  };
+  const saveMileageBtn=document.getElementById('saveMileageBtn');
+  if(saveMileageBtn) saveMileageBtn.onclick=()=>{
+    const miles=Number(state.ui.miles||0); if(miles<=0) return toast('Enter miles first');
+    const amount = mileageAllowance(miles);
+    const editingId=state.ui.editingEntryId;
+    const entry={type:'mileage',amount,miles,category:'Travel',note:state.ui.note||'Mileage',date:state.ui.date||today()};
+    if(editingId){ updateEntry(editingId, entry); } else { addEntry(entry); }
+    toast(editingId ? 'Mileage updated' : addFeedbackText('mileage', amount));
+    resetAddFormForType('mileage'); save(); render();
+  };
+  const cancelEditBtn=document.getElementById('cancelEditBtn');
+  if(cancelEditBtn) cancelEditBtn.onclick=()=>{ resetAddFormForType(state.ui.addType||'income'); save(); render(); toast('Edit cancelled'); };
+}
+
+function bindPlay(){
+  const resetPlayBtn=document.getElementById('resetPlayBtn');
+  if(resetPlayBtn) resetPlayBtn.onclick=()=>{
+    state.ui.playIncome=''; state.ui.playExpense=''; state.ui.playMiles=''; state.ui.playStaff=''; state.ui.playScenarioLabel='';
+    save(); render(); toast('Scenario reset');
+  };
+  const movePlayToAdd=(type, valueKey, extra={})=>{
+    const raw=Number(state.ui[valueKey]||0);
+    if(raw<=0) return false;
+    resetAddFormForType(type);
+    if(type==='mileage') state.ui.miles=String(raw);
+    else if(type==='staff') state.ui.staffGross=String(raw);
+    else state.ui.amount=String(raw);
+    state.ui.note=extra.note || 'From Play';
+    if(extra.category) state.ui.category=extra.category;
+    state.ui.date=today();
+    save(); setTab('add');
+    requestAnimationFrame(()=>scrollAddIntoView(type==='mileage' ? 'miles' : 'amount'));
+    toast('Amount moved into Add — save it when ready');
+    return true;
+  };
+  const usePlayExpense=document.getElementById('usePlayExpense');
+  if(usePlayExpense) usePlayExpense.onclick=()=>{ if(!movePlayToAdd('expense','playExpense',{category:'Play expense'})) toast('Enter a test cost first'); };
+  const usePlayMiles=document.getElementById('usePlayMiles');
+  if(usePlayMiles) usePlayMiles.onclick=()=>{ if(!movePlayToAdd('mileage','playMiles',{note:'From Play mileage'})) toast('Enter test miles first'); };
+  const usePlayIncome=document.getElementById('usePlayIncome');
+  if(usePlayIncome) usePlayIncome.onclick=()=>{ if(!movePlayToAdd('income','playIncome',{category:'Play income'})) toast('Enter test income first'); };
+  const usePlayStaff=document.getElementById('usePlayStaff');
+  if(usePlayStaff) usePlayStaff.onclick=()=>{ if(!movePlayToAdd('staff','playStaff',{note:'From Play staff'})) toast('Enter test staff cost first'); };
+}
+
+function bindTimeline(){
+  document.querySelectorAll('.editEntryBtn').forEach(btn=>btn.onclick=()=>editEntry(btn.dataset.id));
+  document.querySelectorAll('.deleteEntryBtn').forEach(btn=>btn.onclick=()=>{
+    if(confirm('Delete this entry?')) deleteEntry(btn.dataset.id);
+  });
+  const y=document.getElementById('timelineTaxYearSelect');
+  if(y) y.onchange=()=>{state.selectedTaxYear=y.value; state.taxProfileName=profileForYear(y.value).name; save(); render();};
+  const q=document.getElementById('timelineQuarterSelect');
+  if(q) q.onchange=()=>{state.selectedQuarter=q.value; save(); render();};
+  const footerAddBtn=document.getElementById('footerAddBtn');
+  if(footerAddBtn) footerAddBtn.onclick=()=>setTab('add');
+  const footerSaveDataBtn=document.getElementById('footerSaveDataBtn');
+  if(footerSaveDataBtn) footerSaveDataBtn.onclick=()=>exportAppData();
+  const footerPlayBtn=document.getElementById('footerPlayBtn');
+  if(footerPlayBtn) footerPlayBtn.onclick=()=>setTab('play');
+  const timelineEmptyAddBtn=document.getElementById('timelineEmptyAddBtn');
+  if(timelineEmptyAddBtn) timelineEmptyAddBtn.onclick=()=>setTab('add');
+  const timelineEmptyPlayBtn=document.getElementById('timelineEmptyPlayBtn');
+  if(timelineEmptyPlayBtn) timelineEmptyPlayBtn.onclick=()=>setTab('play');
+  const deleteVisibleBtn=document.getElementById('deleteVisibleEntriesBtn');
+  if(deleteVisibleBtn) deleteVisibleBtn.onclick=()=>{
+    const visible=periodEntries();
+    if(!visible.length) return toast('Nothing to delete in this period');
+    if(!confirm(`Delete ${visible.length} visible entr${visible.length===1?'y':'ies'}?`)) return;
+    const visibleIds=new Set(visible.map(e=>String(e.id)));
+    state.entries=(state.entries||[]).filter(e=>!visibleIds.has(String(e.id)));
+    logAction('Visible entries deleted', `${visible.length} removed from ${selectedPeriodLabel()}`);
+    save(); render(); toast('Visible period deleted');
+  };
+  const deleteAllBtn=document.getElementById('deleteAllEntriesBtn');
+  if(deleteAllBtn) deleteAllBtn.onclick=()=>{
+    const count=(state.entries||[]).length;
+    if(!count) return toast('Nothing to delete');
+    if(!confirm(`Delete all ${count} entries from this device?`)) return;
+    state.entries=[];
+    logAction('All entries deleted', `${count} entries removed`);
+    save(); render(); toast('All entries deleted');
+  };
+}
+function bindSettings(){
+  document.getElementById('hmrcGuideBtn').onclick=()=>window.open(HMRC_URL,'_blank');
+  document.getElementById('exportDataBtn').onclick=()=>exportAppData();
+  document.getElementById('importDataBtn').onclick=()=>document.getElementById('importDataFile').click();
+  const showWelcomeBtn=document.getElementById('showWelcomeBtn');
+  if(showWelcomeBtn) showWelcomeBtn.onclick=()=>openWelcome();
+  document.getElementById('importDataFile').onchange=(event)=>{
+    const file=event.target.files && event.target.files[0];
+    importAppData(file);
+    event.target.value='';
+  };
+  const recoverBtn=document.getElementById('restoreResetBackupBtn');
+  if(recoverBtn){
+    recoverBtn.style.opacity = emergencyBackupAvailable() ? '1' : '.55';
+    recoverBtn.onclick=()=>{
+      if(!emergencyBackupAvailable()) return toast('No reset backup found on this device');
+      if(!confirm('Recover the last reset backup on this device?')) return;
+      if(restoreEmergencyBackup()){
+        render();
+        toast('Reset backup recovered');
+      }else{
+        toast('Could not recover that backup');
+      }
+    };
+  }
+  const removeTestBtn=document.getElementById('removeTestDataBtn');
+  if(removeTestBtn) removeTestBtn.onclick=()=>{
+    const removed=removeLikelyTestData();
+    if(!removed) return toast('No old test data found');
+    render();
+    toast(`${removed} old test item${removed===1?'':'s'} removed`);
+  };
+  document.getElementById('resetAppBtn').onclick=()=>{
+    if(!confirm('This will clear TaxTap on this device. An emergency backup will be kept so you can recover it later. Continue?')) return;
+    try{
+      stashEmergencyBackup(state, 'Emergency backup created before reset');
+      localStorage.removeItem(KEY);
+      OLD_KEYS.forEach((k)=>localStorage.removeItem(k));
+      sessionStorage.clear();
+    }catch(e){}
+    state=normalizeState(clone(defaultState));
+    state.onboarding.welcomeSeen=false;
+    save();
+    toast('Device reset complete');
+    setTimeout(()=>location.reload(), 120);
+  };
+  document.querySelectorAll('.repeatToggle').forEach(box=>box.onchange=()=>{
+    const id=Number(box.dataset.id);
+    const item=(state.recurring||[]).find(r=>Number(r.id)===id);
+    if(item){ item.active=box.checked; logAction('Repeat toggled', `${item.label} ${item.active?'on':'off'}`); save(); toast(item.label+' '+(item.active?'on':'off')); render(); }
+  });
+
+  [['fullNameInput','fullName'],['address1Input','address1'],['address2Input','address2'],['postcodeInput','postcode'],['emailInput','email'],['phoneInput','phone'],['businessNameInput','businessName'],['utrInput','utr'],['taxCodeInput','taxCode'],['niInput','niNumber']].forEach(([id,key])=>{
+    const el=document.getElementById(id); if(el){ el.oninput=()=>{ state.profile[key]=el.value; if(key==='fullName'){ state.userName=(el.value||'').split(' ')[0] || 'You'; } save(); }; }
+  });
+
+  const yearSelect=document.getElementById('settingsYearSelect');
+  if(yearSelect) yearSelect.onchange=()=>{state.activeSettingsYear=yearSelect.value; save(); render();};
+
+  const getProfileDraft=()=>{
+    const year=state.activeSettingsYear || state.selectedTaxYear;
+    const p=profileForYear(year);
+    p.name=document.getElementById('profileNameInput').value;
+    p.personalAllowance=Number(document.getElementById('personalAllowanceInput').value||0);
+    p.basicRate=Number(document.getElementById('basicRateInput').value||0);
+    p.higherRate=Number(document.getElementById('higherRateInput').value||0);
+    p.additionalRate=Number(document.getElementById('additionalRateInput').value||0);
+    p.basicBand=Number(document.getElementById('basicBandInput').value||0);
+    p.higherThreshold=Number(document.getElementById('higherThresholdInput').value||0);
+    p.additionalThreshold=Number(document.getElementById('additionalThresholdInput').value||0);
+    p.class4MainRate=Number(document.getElementById('class4MainRateInput').value||0);
+    p.class4UpperRate=Number(document.getElementById('class4UpperRateInput').value||0);
+    p.class4LowerProfitsLimit=Number(document.getElementById('class4LowerProfitsLimitInput').value||0);
+    p.class4UpperProfitsLimit=Number(document.getElementById('class4UpperProfitsLimitInput').value||0);
+    p.mileage.primary=Number(document.getElementById('mileagePrimaryInput').value||0);
+    p.mileage.secondary=Number(document.getElementById('mileageSecondaryInput').value||0);
+    p.mileage.limit=Number(document.getElementById('mileageLimitInput').value||0);
+    p.deadlines.Q1=document.getElementById('deadlineQ1Input').value;
+    p.deadlines.Q2=document.getElementById('deadlineQ2Input').value;
+    p.deadlines.Q3=document.getElementById('deadlineQ3Input').value;
+    p.deadlines.Q4=document.getElementById('deadlineQ4Input').value;
+    p.deadlines.YEAR_END=document.getElementById('deadlineYearEndInput').value;
+    state.taxProfiles[year]=p;
+    return {year,p};
+  };
+
+  document.getElementById('saveRuleProfileBtn').onclick=()=>{
+    const {year,p}=getProfileDraft();
+    const dates=[p.deadlines.Q1,p.deadlines.Q2,p.deadlines.Q3,p.deadlines.Q4,p.deadlines.YEAR_END];
+    const ordered = dates.every(Boolean) && dates.join('|') === [...dates].sort().join('|');
+    if(!(p.basicRate>=0 && p.basicRate<=1 && p.higherRate>=0 && p.higherRate<=1 && p.additionalRate>=0 && p.additionalRate<=1 && p.class4MainRate>=0 && p.class4MainRate<=1 && p.class4UpperRate>=0 && p.class4UpperRate<=1)) return toast('Rates must be between 0 and 1');
+    if(p.personalAllowance<0) return toast('Personal allowance cannot be negative');
+    if(p.basicBand<=0 || p.higherThreshold<=0 || p.additionalThreshold<=0) return toast('Tax thresholds must be above 0');
+    if(!(p.class4LowerProfitsLimit>=0 && p.class4UpperProfitsLimit>=p.class4LowerProfitsLimit)) return toast('Class 4 limits are not valid');
+    if(p.mileage.primary<0 || p.mileage.secondary<0 || p.mileage.limit<0) return toast('Mileage values cannot be negative');
+    if(!ordered) return toast('Deadlines must be valid and in date order');
+    if(year===state.selectedTaxYear){
+      state.taxProfileName=p.name;
+      state.mileage = {...p.mileage};
+    }
+    logAction('Rule profile saved', `${year} · ${p.name}`);
+    save();
+    toast('Tax-year rules saved');
+    render();
+  };
+  document.getElementById('useThisYearBtn').onclick=()=>{
+    const year=state.activeSettingsYear || state.selectedTaxYear;
+    const p=profileForYear(year);
+    state.selectedTaxYear=year;
+    state.taxProfileName=p.name;
+    state.mileage={...p.mileage};
+    logAction('Active tax year changed', `${year} now drives reporting`);
+    save();
+    toast('Tax year switched');
+    render();
+  };
+}
+function applyUsual(key){
+  const item = usualItems().find(x=>x.key===key);
+  if(!item) return;
+  if(item.type==='mileage'){
+    addEntry({type:'mileage',amount:item.amount,miles:item.miles,category:item.category||'Travel',note:item.note||item.label,date:today()});
+  } else if(item.type==='staff'){
+    addEntry({type:'staff',amount:item.amount,category:'Staff cost',note:item.note||item.label,date:today(),grossPay:item.grossPay||item.amount,employerNI:item.employerNI||0,pension:item.pension||0});
+  } else {
+    addEntry({type:item.type||'expense',amount:item.amount,category:item.category||item.label,note:item.note||item.label,date:today()});
+  }
+  toast(item.label+' added in one tap');
+  render();
+}
+
+function openCalc(target){
+  calcTarget=target;
+  const ui=state.ui;
+  const map={
+    amount: ui.amount||'0',
+    miles: ui.miles||'0',
+    playIncome: ui.playIncome||'0',
+    playExpense: ui.playExpense||'0',
+    playMiles: ui.playMiles||'0',
+    playStaff: ui.playStaff||'0',
+    mileagePrimary: state.mileage.primary||'0',
+    mileageSecondary: state.mileage.secondary||'0',
+    mileageLimit: state.mileage.limit||'0',
+    staffGross: ui.staffGross||'0',
+    staffNI: ui.staffNI||'0',
+    staffPension: ui.staffPension||'0'
+  };
+  calcValue=String(map[target] ?? '0');
+  updateCalc();
+  overlay.classList.add('show');
+}
+function closeCalc(){overlay.classList.remove('show'); calcTarget=null;}
+function updateCalc(){calcDisplay.textContent=calcValue===''?'0':calcValue;}
+function postCalcGuide(target){
+  if(['amount','miles','staffGross','staffNI','staffPension'].includes(target)) {
+    requestAnimationFrame(()=>scrollAddIntoView(target==='miles' ? 'miles' : 'amount'));
+    toast(target==='miles' ? 'Miles entered — save is ready below' : 'Amount entered — save is ready below');
+  }
+  if(['playIncome','playExpense','playMiles','playStaff'].includes(target)) {
+    requestAnimationFrame(()=>{ const changes=document.querySelector('.playChangesGrid'); if(changes) changes.scrollIntoView({behavior:'smooth', block:'start'}); });
+    toast('Scenario updated below');
+  }
+}
+function applyCalc(){
+  const target=calcTarget;
+  const v=calcValue===''?'0':calcValue;
+  if(calcTarget==='amount') state.ui.amount=v;
+  else if(calcTarget==='miles') state.ui.miles=v;
+  else if(calcTarget==='playIncome') state.ui.playIncome=v;
+  else if(calcTarget==='playExpense') state.ui.playExpense=v;
+  else if(calcTarget==='playMiles') state.ui.playMiles=v;
+  else if(calcTarget==='playStaff') state.ui.playStaff=v;
+  else if(calcTarget==='mileagePrimary') state.mileage.primary=Number(v||0);
+  else if(calcTarget==='mileageSecondary') state.mileage.secondary=Number(v||0);
+  else if(calcTarget==='mileageLimit') state.mileage.limit=Number(v||0);
+  else if(calcTarget==='staffGross') state.ui.staffGross=v;
+  else if(calcTarget==='staffNI') state.ui.staffNI=v;
+  else if(calcTarget==='staffPension') state.ui.staffPension=v;
+  save(); closeCalc(); render();
+  postCalcGuide(target);
+}
+
+const closeCalcBtn=document.getElementById('closeCalc'); if(closeCalcBtn) closeCalcBtn.onclick=closeCalc;
+const saveCalcBtn=document.getElementById('saveCalc'); if(saveCalcBtn) saveCalcBtn.onclick=applyCalc;
+document.querySelectorAll('.key[data-key]').forEach(btn=>btn.onclick=()=>{
+  const k=btn.dataset.key;
+  if(k==='clear'){calcValue='0';}
+  else if(k==='back'){calcValue=calcValue.length>1?calcValue.slice(0,-1):'0';}
+  else if(k==='plusminus'){if(calcValue.startsWith('-')) calcValue=calcValue.slice(1); else if(calcValue!=='0') calcValue='-'+calcValue;}
+  else if(k==='.'){if(!calcValue.includes('.')) calcValue+= '.';}
+  else { if(calcValue==='0' && k!=='00') calcValue=k; else calcValue+=k; }
+  updateCalc();
+});
+
+function render(){
+  const autoAdded = maybeAutoAddRecurring();
+  if(state.currentTab==='home') screen.innerHTML=renderHome();
+  else if(state.currentTab==='add') screen.innerHTML=renderAdd();
+  else if(state.currentTab==='play') screen.innerHTML=renderPlay();
+  else if(state.currentTab==='timeline') screen.innerHTML=renderTimeline();
+  else screen.innerHTML=renderSettings();
+  bindCommon();
+  if(state.currentTab==='home') bindHome();
+  if(state.currentTab==='add') bindAdd();
+  if(state.currentTab==='play') bindPlay();
+  if(state.currentTab==='timeline') bindTimeline();
+  if(state.currentTab==='settings') bindSettings();
+  bindWelcome();
+  if(shouldShowWelcome()) openWelcome();
+  if(autoAdded) toast(autoAdded+' repeat payment'+(autoAdded>1?'s':'')+' added for this month');
+}
+try {
+  render();
+} catch (err) {
+  console.error(err);
+  if(screen){ screen.innerHTML = '<section class="card"><h2>TaxTap hit a loading problem</h2><p>Please refresh the page. Your saved data on this device has not been removed.</p><pre style="white-space:pre-wrap;font-size:.85rem">'+String(err && err.message ? err.message : err)+'</pre></section>'; }
+}
+})();
+</script>
+</body>
+</html>

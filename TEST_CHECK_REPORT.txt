@@ -1,0 +1,41 @@
+TaxTap completion check report
+Date: 2026-04-13
+
+Checks completed:
+1. JavaScript syntax check passed.
+2. State normalisation check passed for upgraded builds.
+3. Tax-year filters checked against seed data:
+   - 2026/27 full year = 6 entries
+   - 2025/26 Q4 = 9 entries
+4. Quarterly prep view checked:
+   - 2026/27 Q1 quarterly update
+   - deadline 2026-08-07
+5. Year-end prep view checked:
+   - 2026/27 year-end return
+   - deadline 2028-01-31
+6. Render generation check passed for:
+   - Home
+   - Timeline
+   - Settings
+7. Rule engine layer checked:
+   - profile retrieval by year works
+   - future-year profile generation present
+   - period-aware totals use selected tax-year rules
+
+Notes:
+- This is still a local HTML app, so persistence is browser localStorage based.
+- Browser automation was restricted in this environment, so final validation here used syntax checks and direct runtime function checks with a stubbed DOM.
+
+2026-04-13 hardening patch applied. Manual checks targeted: first-run empty state, edit no longer removes entry before save, reset now requests confirmation.
+
+Polish pass checks
+- JS parse check passed after polish edits
+- Verified one-tap quick expense handler is present in shipped HTML
+- Verified applyUsual now saves repeat entries directly
+- Verified friendly first-use starter actions are present in Home
+- Verified empty-state copy added for shortcuts, repeats and documents
+
+V7 check
+- Inline play input fields present
+- No openCalc buttons remain on Play tiles
+- app_bundle.js parse check passed

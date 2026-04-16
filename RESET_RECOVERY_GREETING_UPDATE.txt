@@ -1,0 +1,18 @@
+TaxTap update applied
+
+Changes made
+- Added stronger reset logic that clears the active app data key and starts clean.
+- Added emergency reset backup stored locally so data can be recovered after an accidental reset.
+- Added Retrieve my data + Recover reset data options in Settings.
+- Added Remove old test data button for contaminated/demo entries.
+- Added easier deletion on Timeline: delete visible period and delete all entries.
+- Added dynamic home greeting:
+  - Good morning / Good afternoon / Good evening
+  - Welcome-back message including days since last seen
+- Moved app storage to v9 key so older contaminated states do not keep showing as the live dataset.
+
+Checks completed
+- Confirmed HMRC link button still present.
+- Confirmed new recovery/reset buttons exist in HTML.
+- Confirmed delete-visible and delete-all controls exist in Timeline.
+- Confirmed dynamic greeting strings are wired into home screen.

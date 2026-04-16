@@ -1,0 +1,26 @@
+TaxTap v11 tax consistency fix
+
+What was wrong
+- Totals() used keep = income - tax
+- Play calculations used keepAfter = incomeAfter - taxAfter
+- That overstated "You keep" whenever costs had already reduced profit
+
+What is fixed
+- "You keep" now uses: max(0, profit - tax)
+- Play view now uses: max(0, profitAfter - taxAfter)
+- "Disposable" is aligned to the same net-after-tax figure
+- Added a consistency flag in totals() for future guard rails
+
+Check using screenshot scenario
+- Income: 50,000.00
+- Cash costs: 19,000.00
+- Mileage deduction: 5,750.00
+- Profit before tax: 25,250.00
+- Income tax: 2,536.00
+- Class 4 NI: 760.80
+- Total tax: 3,296.80
+- Correct You keep: 21,953.20
+
+Model scope
+- This remains a simple sole-trader England/Wales/Northern-Ireland estimate model using income tax + Class 4 NIC + mileage allowance.
+- It is not a full universal UK tax engine for every edge case.

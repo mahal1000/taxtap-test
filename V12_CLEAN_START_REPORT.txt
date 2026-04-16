@@ -1,0 +1,8 @@
+TaxTap v12 clean-start fix
+
+Changes
+- Fresh storage key: taxtap_clean_v12
+- No automatic migration from older populated keys
+- First open starts empty
+- Reset removes old v8/v9/v10/v11 keys
+- Keep/disposable figures remain aligned to profit minus tax

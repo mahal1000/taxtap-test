@@ -1,0 +1,9 @@
+TaxTap v14 welcome fix
+
+Issue found
+- The welcome screen HTML and styles were present.
+- The render function was not calling bindWelcome() and openWelcome().
+
+Fix applied
+- render() now binds the welcome buttons on every render.
+- render() now opens the welcome screen automatically when welcomeSeen is false.

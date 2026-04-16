@@ -1,0 +1,29 @@
+TaxTap finished build
+
+Added in this final package:
+- tax-year profile rule engine
+- active tax-year switching
+- period-aware tax year and quarter reporting
+- quarterly update and year-end return figures
+- editable per-year rates, mileage and deadlines
+- light rule validation
+- light audit trail
+- staff-by-person summary
+- save my data / load my data backup tools
+
+2026-04-13 hardening patch: removed seeded first-run data, fixed non-destructive edit flow with cancel, added reset confirmation.
+
+Polish pass v3
+- Added warm first-use home state with simple start actions
+- Turned quick expense chips into true one-tap saves
+- Turned top usuals into true one-tap repeats
+- Improved empty states for shortcuts, repeat payments and documents
+- Improved reassurance copy for install / backup messages
+- Added lighter interaction polish and focus states
+
+
+V7
+- Play inputs changed from pop-up calculator buttons to direct inline number fields
+- Play scoreboard now updates as you type
+- Play mileage field now accepts miles directly
+- Small wording improvement in scoreboard labels

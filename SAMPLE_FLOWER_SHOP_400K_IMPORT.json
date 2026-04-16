@@ -1,0 +1,772 @@
+{
+  "app": "TaxTap",
+  "version": "fixed-tax-validation-build",
+  "exportedAt": "2026-04-15T00:00:00.000Z",
+  "key": "taxtap_worldclass_v8",
+  "state": {
+    "currentTab": "home",
+    "selectedTaxYear": "2026/27",
+    "selectedQuarter": "all",
+    "activeSettingsYear": "2026/27",
+    "taxProfileName": "UK Standard 2026/27",
+    "profile": {
+      "fullName": "Asha Florals",
+      "address1": "12 Market Row",
+      "address2": "Birmingham",
+      "postcode": "B1 1AA",
+      "email": "owner@example.com",
+      "phone": "07123456789",
+      "businessName": "Asha Flower Shop",
+      "utr": "1234567890",
+      "taxCode": "1257L",
+      "niNumber": "QQ123456C"
+    },
+    "entries": [
+      {
+        "id": 1,
+        "type": "income",
+        "amount": 28000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-04-15"
+      },
+      {
+        "id": 2,
+        "type": "expense",
+        "amount": 9000,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-04-15"
+      },
+      {
+        "id": 3,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-04-15"
+      },
+      {
+        "id": 4,
+        "type": "expense",
+        "amount": 420,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-04-15"
+      },
+      {
+        "id": 5,
+        "type": "expense",
+        "amount": 380,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-04-15"
+      },
+      {
+        "id": 6,
+        "type": "staff",
+        "amount": 4200,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-04-15",
+        "grossPay": 3900,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 7,
+        "type": "mileage",
+        "amount": 54.0,
+        "miles": 120,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-04-15"
+      },
+      {
+        "id": 8,
+        "type": "income",
+        "amount": 30000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-05-15"
+      },
+      {
+        "id": 9,
+        "type": "expense",
+        "amount": 9500,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-05-15"
+      },
+      {
+        "id": 10,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-05-15"
+      },
+      {
+        "id": 11,
+        "type": "expense",
+        "amount": 430,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-05-15"
+      },
+      {
+        "id": 12,
+        "type": "expense",
+        "amount": 390,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-05-15"
+      },
+      {
+        "id": 13,
+        "type": "staff",
+        "amount": 4300,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-05-15",
+        "grossPay": 4000,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 14,
+        "type": "mileage",
+        "amount": 49.5,
+        "miles": 110,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-05-15"
+      },
+      {
+        "id": 15,
+        "type": "income",
+        "amount": 32000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-06-15"
+      },
+      {
+        "id": 16,
+        "type": "expense",
+        "amount": 9800,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-06-15"
+      },
+      {
+        "id": 17,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-06-15"
+      },
+      {
+        "id": 18,
+        "type": "expense",
+        "amount": 450,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-06-15"
+      },
+      {
+        "id": 19,
+        "type": "expense",
+        "amount": 395,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-06-15"
+      },
+      {
+        "id": 20,
+        "type": "staff",
+        "amount": 4400,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-06-15",
+        "grossPay": 4100,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 21,
+        "type": "mileage",
+        "amount": 58.5,
+        "miles": 130,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-06-15"
+      },
+      {
+        "id": 22,
+        "type": "income",
+        "amount": 29000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-07-15"
+      },
+      {
+        "id": 23,
+        "type": "expense",
+        "amount": 9200,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-07-15"
+      },
+      {
+        "id": 24,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-07-15"
+      },
+      {
+        "id": 25,
+        "type": "expense",
+        "amount": 440,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-07-15"
+      },
+      {
+        "id": 26,
+        "type": "expense",
+        "amount": 385,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-07-15"
+      },
+      {
+        "id": 27,
+        "type": "staff",
+        "amount": 4250,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-07-15",
+        "grossPay": 3950,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 28,
+        "type": "mileage",
+        "amount": 56.25,
+        "miles": 125,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-07-15"
+      },
+      {
+        "id": 29,
+        "type": "income",
+        "amount": 31000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-08-15"
+      },
+      {
+        "id": 30,
+        "type": "expense",
+        "amount": 9600,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-08-15"
+      },
+      {
+        "id": 31,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-08-15"
+      },
+      {
+        "id": 32,
+        "type": "expense",
+        "amount": 445,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-08-15"
+      },
+      {
+        "id": 33,
+        "type": "expense",
+        "amount": 400,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-08-15"
+      },
+      {
+        "id": 34,
+        "type": "staff",
+        "amount": 4350,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-08-15",
+        "grossPay": 4050,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 35,
+        "type": "mileage",
+        "amount": 63.0,
+        "miles": 140,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-08-15"
+      },
+      {
+        "id": 36,
+        "type": "income",
+        "amount": 33000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-09-15"
+      },
+      {
+        "id": 37,
+        "type": "expense",
+        "amount": 10200,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-09-15"
+      },
+      {
+        "id": 38,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-09-15"
+      },
+      {
+        "id": 39,
+        "type": "expense",
+        "amount": 460,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-09-15"
+      },
+      {
+        "id": 40,
+        "type": "expense",
+        "amount": 410,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-09-15"
+      },
+      {
+        "id": 41,
+        "type": "staff",
+        "amount": 4450,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-09-15",
+        "grossPay": 4150,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 42,
+        "type": "mileage",
+        "amount": 65.25,
+        "miles": 145,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-09-15"
+      },
+      {
+        "id": 43,
+        "type": "income",
+        "amount": 34000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-10-15"
+      },
+      {
+        "id": 44,
+        "type": "expense",
+        "amount": 10400,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-10-15"
+      },
+      {
+        "id": 45,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-10-15"
+      },
+      {
+        "id": 46,
+        "type": "expense",
+        "amount": 470,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-10-15"
+      },
+      {
+        "id": 47,
+        "type": "expense",
+        "amount": 420,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-10-15"
+      },
+      {
+        "id": 48,
+        "type": "staff",
+        "amount": 4550,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-10-15",
+        "grossPay": 4250,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 49,
+        "type": "mileage",
+        "amount": 67.5,
+        "miles": 150,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-10-15"
+      },
+      {
+        "id": 50,
+        "type": "income",
+        "amount": 35000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-11-15"
+      },
+      {
+        "id": 51,
+        "type": "expense",
+        "amount": 10800,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-11-15"
+      },
+      {
+        "id": 52,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-11-15"
+      },
+      {
+        "id": 53,
+        "type": "expense",
+        "amount": 480,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-11-15"
+      },
+      {
+        "id": 54,
+        "type": "expense",
+        "amount": 430,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-11-15"
+      },
+      {
+        "id": 55,
+        "type": "staff",
+        "amount": 4650,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-11-15",
+        "grossPay": 4350,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 56,
+        "type": "mileage",
+        "amount": 69.75,
+        "miles": 155,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-11-15"
+      },
+      {
+        "id": 57,
+        "type": "income",
+        "amount": 42000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2026-12-15"
+      },
+      {
+        "id": 58,
+        "type": "expense",
+        "amount": 12500,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2026-12-15"
+      },
+      {
+        "id": 59,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2026-12-15"
+      },
+      {
+        "id": 60,
+        "type": "expense",
+        "amount": 520,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2026-12-15"
+      },
+      {
+        "id": 61,
+        "type": "expense",
+        "amount": 470,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2026-12-15"
+      },
+      {
+        "id": 62,
+        "type": "staff",
+        "amount": 5100,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2026-12-15",
+        "grossPay": 4800,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 63,
+        "type": "mileage",
+        "amount": 76.5,
+        "miles": 170,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2026-12-15"
+      },
+      {
+        "id": 64,
+        "type": "income",
+        "amount": 36000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2027-01-15"
+      },
+      {
+        "id": 65,
+        "type": "expense",
+        "amount": 11000,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2027-01-15"
+      },
+      {
+        "id": 66,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2027-01-15"
+      },
+      {
+        "id": 67,
+        "type": "expense",
+        "amount": 500,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2027-01-15"
+      },
+      {
+        "id": 68,
+        "type": "expense",
+        "amount": 440,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2027-01-15"
+      },
+      {
+        "id": 69,
+        "type": "staff",
+        "amount": 4800,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2027-01-15",
+        "grossPay": 4500,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 70,
+        "type": "mileage",
+        "amount": 72.0,
+        "miles": 160,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2027-01-15"
+      },
+      {
+        "id": 71,
+        "type": "income",
+        "amount": 34000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2027-02-15"
+      },
+      {
+        "id": 72,
+        "type": "expense",
+        "amount": 10600,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2027-02-15"
+      },
+      {
+        "id": 73,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2027-02-15"
+      },
+      {
+        "id": 74,
+        "type": "expense",
+        "amount": 490,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2027-02-15"
+      },
+      {
+        "id": 75,
+        "type": "expense",
+        "amount": 430,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2027-02-15"
+      },
+      {
+        "id": 76,
+        "type": "staff",
+        "amount": 4700,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2027-02-15",
+        "grossPay": 4400,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 77,
+        "type": "mileage",
+        "amount": 67.5,
+        "miles": 150,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2027-02-15"
+      },
+      {
+        "id": 78,
+        "type": "income",
+        "amount": 36000,
+        "category": "Sales",
+        "note": "Flower shop sales",
+        "date": "2027-03-15"
+      },
+      {
+        "id": 79,
+        "type": "expense",
+        "amount": 11000,
+        "category": "Stock",
+        "note": "Flowers and stock",
+        "date": "2027-03-15"
+      },
+      {
+        "id": 80,
+        "type": "expense",
+        "amount": 1800,
+        "category": "Rent",
+        "note": "Shop rent",
+        "date": "2027-03-15"
+      },
+      {
+        "id": 81,
+        "type": "expense",
+        "amount": 495,
+        "category": "Utilities",
+        "note": "Utilities",
+        "date": "2027-03-15"
+      },
+      {
+        "id": 82,
+        "type": "expense",
+        "amount": 440,
+        "category": "Packaging",
+        "note": "Packaging",
+        "date": "2027-03-15"
+      },
+      {
+        "id": 83,
+        "type": "staff",
+        "amount": 4800,
+        "category": "Staff cost",
+        "note": "Team member \u00b7 wages",
+        "date": "2027-03-15",
+        "grossPay": 4500,
+        "employerNI": 220,
+        "pension": 80
+      },
+      {
+        "id": 84,
+        "type": "mileage",
+        "amount": 65.25,
+        "miles": 145,
+        "category": "Travel",
+        "note": "Supplier run",
+        "date": "2027-03-15"
+      }
+    ],
+    "documents": [
+      {
+        "id": 1,
+        "name": "invoice.pdf"
+      },
+      {
+        "id": 2,
+        "name": "receipt.pdf"
+      },
+      {
+        "id": 3,
+        "name": "statement.pdf"
+      }
+    ],
+    "recurring": [],
+    "auditLog": [],
+    "mileage": {
+      "primary": 0.45,
+      "secondary": 0.25,
+      "limit": 10000
+    },
+    "ui": {
+      "reportView": "quarter",
+      "date": "2026-04-15"
+    }
+  }
+}

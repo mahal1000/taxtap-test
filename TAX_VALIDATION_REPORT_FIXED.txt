@@ -1,0 +1,48 @@
+TaxTap validation report — fixed tax build
+
+What was corrected
+- Replaced incorrect legacy default tax rates (26% / 42%) with UK standard England/Wales/NI rates: 20%, 40%, 45%.
+- Added automatic repair of older saved tax profiles that still carried those bad default rates.
+- Corrected income-tax logic to taper the Personal Allowance by £1 for every £2 of profit over £100,000, down to £0 at £125,140.
+- Kept Class 4 NIC logic aligned to current standard thresholds and rates used by the app: lower profits limit £12,570, upper profits limit £50,270, rates 6% and 2%.
+- Replaced the missing/wrong HMRC link with the live Self Assessment filing page.
+- Added a visible “File with HMRC” button on the Prepare figures screen and relabelled the Settings link accordingly.
+
+Automated logic checks run
+- Loaded the patched TaxTap.html script in a JS test harness with localStorage stubs.
+- Verified script evaluation completed successfully.
+- Verified HMRC filing URL now points to: https://www.gov.uk/log-in-file-self-assessment-tax-return
+- Verified year-end and quarterly preparation data generation still works.
+
+Flower shop simulation used for validation
+- Tax year: 2026/27
+- Turnover: £400,000.00
+- Entries: 84 total across all 4 quarters
+- Included income, expenses, staff costs and mileage entries
+- Import file included in this zip: SAMPLE_FLOWER_SHOP_400K_IMPORT.json
+
+Quarter results
+- Q1 turnover £90,000.00 | profit £40,773.00 | estimated tax £7,332.78
+- Q2 turnover £93,000.00 | profit £42,825.50 | estimated tax £7,866.43
+- Q3 turnover £111,000.00 | profit £54,596.25 | estimated tax £11,619.03
+- Q4 turnover £106,000.00 | profit £50,700.25 | estimated tax £9,982.71
+
+Full-year result
+- Turnover: £400,000.00
+- Cash expenses: £210,340.00
+- Mileage deduction: £765.00
+- Profit: £188,895.00
+- Income tax: £71,205.75
+- Class 4 NIC: £5,034.50
+- Total estimated tax: £76,240.25
+- Disposable after tracked costs and estimated tax: £113,419.75
+
+Allowance taper spot checks
+- Profit £100,000 => personal allowance £12,570.00, total tax £30,688.60
+- Profit £110,000 => personal allowance £7,570.00, total tax £36,888.60
+- Profit £130,000 => personal allowance £0.00, total tax £48,559.60
+
+Manual review notes
+- This build remains a sole-trader style estimator for standard England/Wales/Northern Ireland income-tax bands plus Class 4 NIC.
+- It is not a full accountant-grade engine for every special case (for example Scottish bands, marriage allowance transfers, student loan, child benefit charge, dividend regimes, CIS, capital allowances, basis-period edge cases, payments on account, or VAT logic).
+- For the scope already built into TaxTap, the corrected core tax-rate/threshold logic is now materially aligned with the current standard rules used by the app.
